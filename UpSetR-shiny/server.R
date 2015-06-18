@@ -642,7 +642,6 @@ shinyServer(function(input, output){
   
   myplot <- reactive({
     upset_base(data = My_data(), 
-               nsets = input$numsets,
                nintersects = input$nintersections,
                point.size = input$pointsize,
                sets = Specific_sets(),

@@ -17,9 +17,6 @@ shinyUI(fluidPage(
                      selected = ';')
       ),
       fluidRow(
-        numericInput("numsets", label = h6("Number of Sets"), value = 5, min = 2, max = 65)
-      ),
-      fluidRow(
         numericInput("nintersections", label = h6("Number of Intersections"), value = 40, min = 1, max = 60)
       ),
       fluidRow(
