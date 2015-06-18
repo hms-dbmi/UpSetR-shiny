@@ -39,7 +39,6 @@ shinyUI(fluidPage(
       ,width = 2),
     mainPanel( tabsetPanel(
       tabPanel("Your Data", tableOutput('data'),
-               textOutput("c"),
                textOutput('obs')
       ),
       tabPanel("UpSet Plot", plotOutput('check', width = "100%", height = "700px"))

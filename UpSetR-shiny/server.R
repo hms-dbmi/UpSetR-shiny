@@ -602,12 +602,17 @@ shinyServer(function(input, output){
   
   
   output$sets <- renderUI({
-    selectInput('Select', h6("Select specific sets : "),
+    if(is.null(My_data()) == T){
+      sets <-  selectInput('Select', h6("Select specific sets : "),
+                           choices = NULL,
+                           multiple=TRUE, selectize=TRUE, selected = NULL)
+    }
+    else{
+   sets <- selectInput('Select', h6("Select specific sets : "),
                 choices = as.character(colnames(My_data()[ , startEnd()[1]:startEnd()[2]])),
                 multiple=TRUE, selectize=TRUE, selected = NULL)
-    if(is.null(input$Select) == T){
-      return(NULL)
     }
+   return(sets)
   })
   
   Specific_sets <- reactive({
@@ -636,7 +641,6 @@ shinyServer(function(input, output){
   })
   
   myplot <- reactive({
-    
     upset_base(data = My_data(), 
                nsets = input$numsets,
                nintersects = input$nintersections,
