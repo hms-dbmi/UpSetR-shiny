@@ -23,7 +23,7 @@ shinyUI(fluidPage(
         htmlOutput("sets")
       ),
       fluidRow(
-        numericInput("mbratio", label = h6("Proportion of Matrix Plot"), value = 30, min = 20, max = 100) 
+        numericInput("mbratio", label = h6("Proportion of Matrix Plot"), value = 0.30, min = 0.20, max = 0.80) 
       ),
       fluidRow(
         numericInput("pointsize", label = h6("Point Size"), value = 4, min = 1, max = 15)
@@ -38,7 +38,7 @@ shinyUI(fluidPage(
       tabPanel("Your Data", tableOutput('data'),
                textOutput('obs')
       ),
-      tabPanel("UpSet Plot", plotOutput('check', width = "100%", height = "700px"))
+      tabPanel("UpSet Plot", imageOutput('plot'))
     ), width = 10
     )
   )
