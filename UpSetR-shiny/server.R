@@ -53,7 +53,6 @@ shinyServer(function(input, output){
         next
       }
     }
-    print(startend[2])
     return(startend)
   }
   
