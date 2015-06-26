@@ -89,7 +89,7 @@ shinyServer(function(input, output){
   orderdat <- reactive({
     orderdat <- as.character(input$order)
     if((orderdat) == "degfreq"){
-      orderdat <- c("freq", "degree")
+      orderdat <- c("degree", "freq")
     }
     else if(orderdat == "degree"){
       orderdat <- c("degree")
