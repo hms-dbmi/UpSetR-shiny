@@ -23,7 +23,8 @@ shinyUI(fluidPage(
         htmlOutput("sets")
       ),
       fluidRow(
-        numericInput("mbratio", label = h6("Proportion of Matrix Plot"), value = 0.30, min = 0.20, max = 0.80) 
+        sliderInput("mbratio", label = h6("Proportion of Matrix Plot"), value = 0.30, min = 0.20, max = 0.80,
+                    ticks = FALSE) 
       ),
       fluidRow(
         numericInput("pointsize", label = h6("Point Size"), value = 4, min = 1, max = 15)
