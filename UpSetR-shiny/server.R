@@ -108,7 +108,7 @@ shinyServer(function(input, output){
     
     # Generate a png
     png(outfile, width=1000, height=750)
-    upset_base(data = My_data(), 
+    upset(data = My_data(), 
                nintersects = input$nintersections,
                point.size = input$pointsize,
                sets = Specific_sets(),
