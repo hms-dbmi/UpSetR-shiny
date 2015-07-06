@@ -4,7 +4,7 @@ library(gridExtra)
 library(plyr)
 library(UpSetR)
 
-shinyServer(function(input, output){
+shinyServer(function(input, output, session){
   My_data <- reactive({  
     inFile <- input$file1
     
@@ -102,12 +102,17 @@ shinyServer(function(input, output){
   # A plot of fixed size
   output$plot <- renderImage({
     
+    width  <- session$clientData$output_plot_width
+    height <- ((session$clientData$output_plot_height)*2)
+    pixelratio <- session$clientData$pixelratio
     # A temp file to save the output. It will be deleted after renderImage
     # sends it, because deleteFile=TRUE.
     outfile <- tempfile(fileext='.png')
     
     # Generate a png
-    png(outfile, width=1000, height=750)
+    png(outfile, width=width*pixelratio, height=height*pixelratio,
+        res=72*pixelratio)
+    
     upset(data = My_data(), 
                nintersects = input$nintersections,
                point.size = input$pointsize,
@@ -118,7 +123,8 @@ shinyServer(function(input, output){
     
     # Return a list
     list(src = outfile,
-         alt = "This is alternate text")
+         width = width,
+         height = height)
   }, deleteFile = TRUE) 
   
 })
