@@ -125,6 +125,37 @@ shinyServer(function(input, output, session){
     list(src = outfile,
          width = width,
          height = height)
-  }, deleteFile = TRUE) 
+  }, deleteFile = TRUE)
+  
+  output$down <- downloadHandler(
+    
+    filename = function(){
+      paste("UpSetR", input$filetype, sep =".")
+    }, 
+    content = function(file){
+      width  <- session$clientData$output_plot_width
+      height <- ((session$clientData$output_plot_height)*2)
+      pixelratio <- session$clientData$pixelratio
+      if(input$filetype == "png")
+        png(file, width=width*pixelratio, height=height*pixelratio,
+            res=72*pixelratio)
+      else
+        pdf(file,width = 22, height = 14)
+      upset(data = My_data(), 
+            nintersects = input$nintersections,
+            point.size = input$pointsize,
+            sets = Specific_sets(),
+            order.matrix = orderdat(),
+            mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())))
+      
+      dev.off()
+    }
+    )
+  
   
 })
+
+
+  
+
+

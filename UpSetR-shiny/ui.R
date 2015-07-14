@@ -33,7 +33,13 @@ shinyUI(fluidPage(
         selectInput("order", label = h6("Order by"), choices = list("Degree" = "degree",
                                                                     "Frequency" = "freq",
                                                                     "Degree then Frequency" = "degfreq"),
-                    selected = "freq"))
+                    selected = "freq")),
+      fluidRow(
+        radioButtons(inputId = "filetype", label = "Select the file type", choices = list("png", "pdf"))
+        ),
+      fluidRow(
+        downloadButton(outputId = "down", label = "Download the plot!")
+        )
       ,width = 2),
     mainPanel( tabsetPanel(
       tabPanel("Your Data", tableOutput('data'),
