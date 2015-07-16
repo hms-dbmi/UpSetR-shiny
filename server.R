@@ -20,7 +20,7 @@ shinyServer(function(input, output, session){
   })
   output$obs <- renderText({
     if(is.null(My_data()) == T){
-      totalobs <- " "
+      totalobs <- "This is where your data will show!"
     }
     else{
       totalobs <- as.character(nrow(My_data()))
@@ -102,6 +102,8 @@ shinyServer(function(input, output, session){
   # A plot of fixed size
   output$plot <- renderImage({
     
+    if(length(My_data()) == 0){stop()}
+    
     width  <- session$clientData$output_plot_width
     height <- ((session$clientData$output_plot_height)*2)
     pixelratio <- session$clientData$pixelratio
@@ -120,7 +122,6 @@ shinyServer(function(input, output, session){
                order.matrix = orderdat(),
                 mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())))
     dev.off()
-    
     # Return a list
     list(src = outfile,
          width = width,

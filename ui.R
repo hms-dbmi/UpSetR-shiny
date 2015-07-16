@@ -15,7 +15,19 @@ shinyUI(navbarPage("UpSet R",
         radioButtons('sep', label = h6('Separator'),
                      choices = c(Comma=',', Semicolon =';', Tab='\t'),
                      selected = ';')
-      ),width = 2), mainPanel())),
+      ),width = 2), mainPanel(
+        h2("Welcome to the UpSetR Shiny App!"),
+        h4("Begin by uploading your correctly formatted .csv file, and selecting the correct separator."),
+        h5("A correctly formatted data set will denote the sets in binary. (e.g. The movie genres in the table below.)"),
+        h6("Additional attributes may be present in the data. (e.g. ReleaseDate, AvgRating in the table below.)"),
+        br(),
+        img(src='Data_setup.png', align = "center"),
+        br(), br(),
+        h4("To check that your data was read correctly click on the tab called 'Your data'."),
+        br(),
+        h4("If your data is correct, click on the 'UpSetR plot' tab to view your UpSet plot and explore your data!"),
+        img(src='Rplot.png', align = "center")
+        ))),
  tabPanel("Your Data",
           mainPanel( tableOutput('data'),
                      textOutput('obs'), width = 10
