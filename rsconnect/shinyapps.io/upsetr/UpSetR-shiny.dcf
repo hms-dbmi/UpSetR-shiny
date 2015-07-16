@@ -1,6 +1,6 @@
 name: UpSetR-shiny
 account: upsetr
 server: shinyapps.io
-bundleId: 220963
+bundleId: 220966
 url: https://upsetr.shinyapps.io/UpSetR-shiny
-when: 1437065807.95426
+when: 1437066418.21794
