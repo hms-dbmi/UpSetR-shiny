@@ -42,7 +42,7 @@ shinyUI(navbarPage("UpSet R",
                      htmlOutput("sets")
                    ),
                    fluidRow(
-                     sliderInput("mbratio", label = h6("Proportion of Matrix Plot"), value = 0.30, min = 0.20, max = 0.80,
+                     sliderInput("mbratio", label = h6("Bar:Matrix ratio"), value = 0.30, min = 0.20, max = 0.80,
                                  ticks = FALSE) 
                    ),
                    fluidRow(
@@ -59,6 +59,7 @@ shinyUI(navbarPage("UpSet R",
                    fluidRow(
                      downloadButton(outputId = "down", label = "Download!")
                    )
-                   ,width = 2),mainPanel(imageOutput('plot')
+                   ,width = 2),mainPanel(textOutput('plot_text'),
+                                        imageOutput('plot')
                                          ,width = 10))
   )))

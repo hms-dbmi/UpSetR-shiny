@@ -29,6 +29,16 @@ shinyServer(function(input, output, session){
     return(totalobs)
   })
   
+  output$plot_text <- renderText({
+    if(is.null(My_data()) == T){
+      plotText <- "This is where your plot will show!"
+    }
+    else{
+      plotText <- " "
+    }
+    return(plotText)
+  })
+  
   FindStartEnd <- function(data){
     startend <- c()
     for(i in 1:ncol(data)){
@@ -105,7 +115,7 @@ shinyServer(function(input, output, session){
     if(length(My_data()) == 0){stop()}
     
     width  <- session$clientData$output_plot_width
-    height <- ((session$clientData$output_plot_height)*2)
+    height <- ((session$clientData$output_plot_height)*1.7)
     pixelratio <- session$clientData$pixelratio
     # A temp file to save the output. It will be deleted after renderImage
     # sends it, because deleteFile=TRUE.
