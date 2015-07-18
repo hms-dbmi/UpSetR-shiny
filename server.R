@@ -113,7 +113,9 @@ shinyServer(function(input, output, session){
   output$plot <- renderImage({
     
     if(length(My_data()) == 0){stop()}
-    
+    if(length(Specific_sets()) == 1){
+      stop()
+    }
     width  <- session$clientData$output_plot_width
     height <- ((session$clientData$output_plot_height)*1.7)
     pixelratio <- session$clientData$pixelratio
@@ -124,7 +126,6 @@ shinyServer(function(input, output, session){
     # Generate a png
     png(outfile, width=width*pixelratio, height=height*pixelratio,
         res=72*pixelratio)
-    
     upset(data = My_data(), 
                nintersects = input$nintersections,
                point.size = input$pointsize,
