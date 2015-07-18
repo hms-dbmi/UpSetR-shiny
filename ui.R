@@ -45,7 +45,7 @@ shinyUI(navbarPage("UpSet R",
                      htmlOutput("sets")
                    ),
                    fluidRow(
-                     sliderInput("mbratio", label = h6("Bar:Matrix ratio"), value = 0.30, min = 0.20, max = 0.80,
+                     sliderInput("mbratio", label = h6("Bar : Matrix ratio"), value = 0.30, min = 0.20, max = 0.80,
                                  ticks = FALSE) 
                    ),
                    fluidRow(
@@ -56,6 +56,9 @@ shinyUI(navbarPage("UpSet R",
                                                                                  "Frequency" = "freq",
                                                                                  "Degree then Frequency" = "degfreq"),
                                  selected = "freq")),
+                   fluidRow(
+                     checkboxInput('empty', label = "Empty Intersections", value = FALSE)
+                     ),
                    fluidRow(
                      radioButtons(inputId = "filetype", label = "File type", choices = list("png", "pdf"))
                    ),

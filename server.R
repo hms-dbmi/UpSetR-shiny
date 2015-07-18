@@ -109,6 +109,15 @@ shinyServer(function(input, output, session){
     return(orderdat)
   })
   
+  emptyIntersects <- reactive({
+    if(isTRUE(input$empty)){choice <- "on"
+    return(choice)
+    }
+    else{
+      return(NULL)
+    }
+  })
+  
   # A plot of fixed size
   output$plot <- renderImage({
     
@@ -131,7 +140,8 @@ shinyServer(function(input, output, session){
                point.size = input$pointsize,
                sets = Specific_sets(),
                order.matrix = orderdat(),
-                mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())))
+                mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())),
+                empty.intersections = emptyIntersects())
     dev.off()
     # Return a list
     list(src = outfile,
