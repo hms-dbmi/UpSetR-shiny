@@ -139,7 +139,7 @@ shinyServer(function(input, output, session){
                nintersects = input$nintersections,
                point.size = input$pointsize,
                sets = Specific_sets(),
-               order.matrix = orderdat(),
+               order.by = orderdat(),
                 mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())),
                 empty.intersections = emptyIntersects())
     dev.off()
@@ -167,7 +167,7 @@ shinyServer(function(input, output, session){
             nintersects = input$nintersections,
             point.size = input$pointsize,
             sets = Specific_sets(),
-            order.matrix = orderdat(),
+            order.by = orderdat(),
             mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())))
       
       dev.off()
