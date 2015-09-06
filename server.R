@@ -5,7 +5,7 @@ library(plyr)
 library(UpSetR)
 
 shinyServer(function(input, output, session){
-  My_data <- reactive({  
+  My_dat <- reactive({  
     inFile <- input$file1
     
     if (is.null(inFile))
@@ -13,6 +13,56 @@ shinyServer(function(input, output, session){
     
     read.csv(inFile$datapath, header = input$header,
              sep = input$sep, quote = input$quote)
+  })
+  
+  listData <- reactive({
+    a <- input$list1; a <- as.list(unlist(strsplit(a,",")))
+    a <- unlist(lapply(a, function(x){x <- gsub(" ", "", x)})); a <- a[a != ""]
+    b <- input$list2
+    b <- as.list(unlist(strsplit(b,",")))
+    b <- unlist(lapply(b, function(x){x <- gsub(" ", "", x)})); b <- b[b != ""]
+    c <- input$list3
+    c <- as.list(unlist(strsplit(c,",")))
+    c <- unlist(lapply(c, function(x){x <- gsub(" ", "", x)})); c <- c[c != ""]
+    d <- input$list4
+    d <- as.list(unlist(strsplit(d,",")))
+    d <- unlist(lapply(d, function(x){x <- gsub(" ", "", x)})); d <- d[d != ""]
+    e <- input$list5
+    e <- as.list(unlist(strsplit(e,",")))
+    e <- unlist(lapply(e, function(x){x <- gsub(" ", "", x)})); e <- e[e != ""]
+    f <- input$list6
+    f <- as.list(unlist(strsplit(f,",")))
+    f <- unlist(lapply(f, function(x){x <- gsub(" ", "", x)})); f <- f[f != ""]
+    all <- list(a,b,c,d,e,f)
+
+    elements <- unique(unlist(all))
+    names <- c("List1", "List2", "List3", "List4", "List5", "List6")
+    data <- unlist(lapply(all, function(x){ x <- as.vector(match(elements, x));}))
+    data[is.na(data)] <- 0; data[data != 0] <- 1;
+    data <- data.frame(matrix(data, ncol = 6, byrow = F))
+    names(data) <- names
+    data <- data[-which(colSums(data) == 0)]
+    if(nrow(data) == 0){
+      data <- NULL
+    }
+    return(data)
+    
+  })
+  
+  My_data <- reactive({
+    if(is.null(My_dat()) == T && is.null(listData()) == T && is.null(venneulerData()) == F){
+      My_data <- venneulerData()
+    }
+    else if(is.null(venneulerData()) == T && is.null(listData()) == T && is.null(My_dat()) == F){
+      My_data <- My_dat()
+    }
+    else if(is.null(venneulerData()) == T && is.null(My_dat())==T && is.null(listData()) == F){
+      My_data <- listData()
+    }
+    else{
+      My_data <- NULL
+    }
+    return(My_data)
   })
   
   output$data <- renderTable({
@@ -29,6 +79,23 @@ shinyServer(function(input, output, session){
     return(totalobs)
   })
   
+  venneulerData <- reactive({
+    string <- input$venn
+    if(string != ""){
+    string <- as.list(unlist(strsplit(string, ",")))
+    names <- lapply(string, function(x){x <- unlist(strsplit(x, "=")); x <- x[1]})
+    names <- unlist(lapply(names, function(x){x <- gsub(" ", "", x)}))
+    values <- as.numeric(unlist(lapply(string, function(x){x <- unlist(strsplit(x,"=")); x <- x[2]})))
+    names(values) <- names
+    venneuler <- upsetVenneuler(values)
+    return(venneuler)
+    }
+    else{
+      venneuler <- NULL
+      return(venneuler)
+    }
+  })
+   
   output$plot_text <- renderText({
     if(is.null(My_data()) == T){
       plotText <- "This is where your plot will show!"
