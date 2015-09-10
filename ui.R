@@ -3,20 +3,23 @@ library(shiny)
 shinyUI(navbarPage("UpSet R",
  tabPanel("Welcome!",
     mainPanel(
-        h2("Welcome to the UpSetR Shiny App!"),
-        h4("Begin by uploading your correctly formatted .csv file, and selecting the correct separator."),
-        h5("A correctly formatted data set will denote the sets in binary. (e.g. The movie genres in the table below.)"),
-        h6("Additional attributes may be present in the data. (e.g. ReleaseDate, AvgRating in the table below.)"),
+        h1("Welcome to the UpSetR Shiny App!"),
         br(),
-        img(src='Data_setup.png', align = "center"),
+        h3("To begin, input your data using one of the three available input styles."),
         br(),
-        h6("Want some data to get a feel for UpSetR?"),
-        tags$a(href = "movies.csv", "Download the movies data set here!"),
+        h4('1. "Upload a file" takes a correctly formatted .csv file'),
+        h4('2. "venneuler input" takes the input used by the venneuler R package', 
+           tags$a(href = "https://cran.r-project.org/web/packages/venneuler/venneuler.pdf", "(Wilkinson, 2015)")),
+        h4('3. "Enter as lists" takes up to 6 different lists that contain unique elements, similar to that used in
+           the web applications BioVenn', tags$a(href = "http://www.biomedcentral.com/content/pdf/1471-2164-9-488.pdf", "(Hulsen et al., 2008)"),
+           'and jvenn', tags$a(href = "http://www.biomedcentral.com/content/pdf/1471-2105-15-293.pdf", "(Bardou et al., 2014)")),
+        br(),
+        h4("Additional information and examples on how to use the input styles are contained in their respective tabs."),
+        br(),br(),
+        h3('To check that your data was read correctly click on the tab called "Your data".'),
         br(), br(),
-        h4("To check that your data was read correctly click on the tab called 'Your data'."),
-        br(),
-        h4("If your data is correct, click on the 'UpSetR plot' tab to view your UpSet plot and explore your data!"),
-        img(src='Rplot.png', align = "center")
+        h3("If your data is correct, click on the 'UpSetR plot' tab to view your UpSet plot and explore your data!"),
+        img(src='Rplot.png', align = "center"), width = 10
         )),
  tabPanel("Upload a file",
           sidebarLayout(
@@ -34,7 +37,20 @@ shinyUI(navbarPage("UpSet R",
                              selected = ';')
               )
             ), 
-            mainPanel()
+            mainPanel(
+              h3("Begin by uploading your correctly formatted .csv file, and selecting the correct separator."),
+              h4("A correctly formatted data set will denote the sets in binary. (e.g. The movie genres in the table below.)"),
+              h5(br()),
+              h5("For example, in this data set Toy Story is considered only a comedy, whereas Grumpier Old Men is considered both a comedy and a romance."),
+              br(),
+              h5("Additional attributes may be present in the data. (e.g. ReleaseDate, AvgRating in the table below.)"),
+              br(),
+              img(src='Data_setup.png', align = "center"),
+              br(),
+              h6("Want some data to get a feel for UpSetR?"),
+              tags$a(href = "movies.csv", "Download the movies data set here!"),
+              br(), br()
+            )
           )
           ),
  tabPanel("venneuler input",
@@ -42,12 +58,18 @@ shinyUI(navbarPage("UpSet R",
      sidebarPanel(
        fluidRow(
          textInput('venn', label=h5("venneuler input"))
-       )
+       ), width = 12
      ),
-     mainPanel()
+     mainPanel(
+       h3("One of the most popular set visualization R packages is the venneuler package."),
+       h3("For this reason we have allowed the same input style for UpSetR."),
+       h3("Here is an example of the input. Copy and paste it above to see how it works."),
+       br(),
+       h4("A=12, B=12, C=5, A&B=4, A&C=2, B&C=1, A&B&C=2")
+     )
    )
  ),
- tabPanel("Enter as list",
+ tabPanel("Enter as lists",
           sidebarLayout(
             sidebarPanel(
               fluidRow(
@@ -57,9 +79,17 @@ shinyUI(navbarPage("UpSet R",
                 textInput('list4', label = h6("List4")),
                 textInput('list5', label = h6("List5")),
                 textInput('list6', label = h6("List6"))
-              )
-            ),
-            mainPanel()
+              ), width = 5),
+            mainPanel(
+              h3("The set visualization web apps BioVenn and jvenn utilize the input style of lists containing unique elements."),
+              h3("This type of input is useful when wanting to compare sets by supplying, say, a list of gene IDs or SNPs"),
+              h3("Here is an example of the input. Copy and paste them into the respective lists to see how it works."),
+              br(),
+              h4("List 1: A, B, C, D, E, F, G, H"),
+              h4("List 2: A, B, D, F, I, J, K, L"),
+              h4("List 3: A, H, J, M, N, O, P, Q"),
+              h4("List 4: B, L, O, P, R, S, T, U")
+              ,width=7)
           )),
  tabPanel("Your Data",
           mainPanel( tableOutput('data'),
