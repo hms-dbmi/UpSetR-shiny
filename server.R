@@ -51,7 +51,7 @@ shinyServer(function(input, output, session){
   })
   
   My_data <- reactive({
-    if(is.null(My_dat()) == T && is.null(listData()) == T && is.null(venneulerData()) == F){
+   if(is.null(My_dat()) == T && is.null(listData()) == T && is.null(venneulerData()) == F){
       My_data <- venneulerData()
     }
     else if(is.null(venneulerData()) == T && is.null(listData()) == T && is.null(My_dat()) == F){
@@ -70,7 +70,14 @@ shinyServer(function(input, output, session){
     head(My_data(), 10)
   })
   output$obs <- renderText({
-    if(is.null(My_data()) == T){
+    
+    if(is.null(My_dat()) == F){x<-1} else{x<-0}
+    if(is.null(listData()) == F){y<-1} else{y<-0}
+    if(is.null(venneulerData()) == F){z<-1} else{z<-0}
+    if((x+y+z)>1){
+      totalobs <- "You have data in two different input formats. Please remove data from one of the formats."
+    }
+    else if(is.null(My_data()) == T){
       totalobs <- "This is where your data will show!"
     }
     else{
@@ -98,7 +105,15 @@ shinyServer(function(input, output, session){
   })
    
   output$plot_text <- renderText({
-    if(is.null(My_data()) == T){
+    
+    if(is.null(My_dat()) == F){x<-1} else{x<-0}
+    if(is.null(listData()) == F){y<-1} else{y<-0}
+    if(is.null(venneulerData()) == F){z<-1} else{z<-0}
+    if((x+y+z)>1){
+      plotText <- "You have data in two different input formats. Please remove data from one of the formats."
+    }
+    
+    else if(is.null(My_data()) == T){
       plotText <- "This is where your plot will show!"
     }
     else{
