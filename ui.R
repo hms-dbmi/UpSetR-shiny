@@ -57,7 +57,9 @@ shinyUI(navbarPage("UpSet R",
    sidebarLayout(
      sidebarPanel(
        fluidRow(
-         textInput('venn', label=h5("venneuler input"))
+         h5("venneuler input"),
+         tags$style(type="text/css", "textarea {width:100%}"),
+         tags$textarea(id="venn", placeholder='', rows = 3)
        ), width = 12
      ),
      mainPanel(
@@ -73,12 +75,24 @@ shinyUI(navbarPage("UpSet R",
           sidebarLayout(
             sidebarPanel(
               fluidRow(
-                textInput('list1', label = h6("List1")),
-                textInput('list2', label = h6("List2")),
-                textInput('list3', label = h6("List3")),
-                textInput('list4', label = h6("List4")),
-                textInput('list5', label = h6("List5")),
-                textInput('list6', label = h6("List6"))
+                h6("List 1"),
+                tags$style(type="text/css", "textarea {width:100%}"),
+                tags$textarea(id='list1', placeholder='', rows = 3),
+                h6("List 2"),
+                tags$style(type="text/css", "textarea {width:100%}"),
+                tags$textarea(id='list2', placeholder='', rows = 3),
+                h6("List 3"),
+                tags$style(type="text/css", "textarea {width:100%}"),
+                tags$textarea(id='list3', placeholder='', rows = 3),
+                h6("List 4"),
+                tags$style(type="text/css", "textarea {width:100%}"),
+                tags$textarea(id='list4', placeholder='', rows = 3),
+                h6("List 5"),
+                tags$style(type="text/css", "textarea {width:100%}"),
+                tags$textarea(id='list5', placeholder='', rows = 3),
+                h6("List 6"),
+                tags$style(type="text/css", "textarea {width:100%}"),
+                tags$textarea(id='list6', placeholder='', rows = 3)
               ), width = 5),
             mainPanel(
               h3("The set visualization web apps BioVenn and jvenn utilize the input style of lists containing unique elements."),
