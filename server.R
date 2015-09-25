@@ -37,12 +37,18 @@ shinyServer(function(input, output, session){
     all <- list(a,b,c,d,e,f)
 
     elements <- unique(unlist(all))
-    names <- c("List1", "List2", "List3", "List4", "List5", "List6")
+    name1 <- input$name1; name2 <- input$name2; name3 <- input$name3; name4 <- input$name4; 
+    name5 <- input$name5; name6 <- input$name6;
+    if(name1==""){name1<-"List 1"}; if(name2==""){name2<-"List 2"}; if(name3==""){name3<-"List 3"};
+    if(name4==""){name4<-"List 4"}; if(name5==""){name5<-"List 5"}; if(name6==""){name6<-"List 6"};
+    names <- c(name1, name2, name3, name4, name5, name6)
     data <- unlist(lapply(all, function(x){ x <- as.vector(match(elements, x));}))
-    data[is.na(data)] <- 0; data[data != 0] <- 1;
+    data[is.na(data)] <- as.integer(0); data[data != 0] <- as.integer(1);
     data <- data.frame(matrix(data, ncol = 6, byrow = F))
     names(data) <- names
-    data <- data[-which(colSums(data) == 0)]
+    
+    data <- data[, which(colSums(data) != 0)]
+    
     if(nrow(data) == 0){
       data <- NULL
     }
