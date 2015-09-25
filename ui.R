@@ -116,17 +116,10 @@ shinyUI(navbarPage("UpSet R",
                sidebarLayout(
                  sidebarPanel(
                    fluidRow(
-                     numericInput("nintersections", label = h6("Number of Intersections"), value = 40, min = 1, max = 60)
-                   ),
-                   fluidRow(
                      htmlOutput("sets")
                    ),
                    fluidRow(
-                     sliderInput("mbratio", label = h6("Bar : Matrix ratio"), value = 0.30, min = 0.20, max = 0.80,
-                                 ticks = FALSE) 
-                   ),
-                   fluidRow(
-                     numericInput("pointsize", label = h6("Point Size"), value = 4, min = 1, max = 15)
+                     numericInput("nintersections", label = h6("Number of Intersections"), value = 40, min = 1, max = 60)
                    ),
                    fluidRow(
                      selectInput("order", label = h6("Order by"), choices = list("Degree" = "degree",
@@ -136,6 +129,13 @@ shinyUI(navbarPage("UpSet R",
                    fluidRow(
                      checkboxInput('empty', label = "Empty Intersections", value = FALSE)
                      ),
+                   fluidRow(
+                     sliderInput("mbratio", label = h6("Bar : Matrix ratio"), value = 0.30, min = 0.20, max = 0.80,
+                                 ticks = FALSE) 
+                   ),
+                   fluidRow(
+                     numericInput("pointsize", label = h6("Point Size"), value = 4, min = 1, max = 15)
+                   ),
                    fluidRow(
                      radioButtons(inputId = "filetype", label = "File type", choices = list("png", "pdf"))
                    ),
