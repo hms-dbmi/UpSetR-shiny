@@ -21,93 +21,99 @@ shinyUI(navbarPage("UpSet R",
         h3("If your data is correct, click on the 'UpSetR plot' tab to view your UpSet plot and explore your data!"),
         img(src='Rplot.png', align = "center"), width = 10
         )),
- tabPanel("Upload a file",
-          sidebarLayout(
-            sidebarPanel(
-              fluidRow(
-                fileInput('file1', label = h5("Upload csv file"), accept = c(
-                  'text/csv', 'text/comma-separated-values', 'text/tab-separated-values', '.csv', '.tsv'))
-              ),
-              fluidRow(
-                checkboxInput('header', label = h6('Header'), TRUE)
-              ),
-              fluidRow(
-                radioButtons('sep', label = h6('Separator'),
-                             choices = c(Comma=',', Semicolon =';', Tab='\t'),
-                             selected = ';')
-              )
-            ), 
-            mainPanel(
-              h3("Begin by uploading your correctly formatted .csv file, and selecting the correct separator."),
-              h4("A correctly formatted data set will denote the sets in binary. (e.g. The movie genres in the table below.)"),
-              h5(br()),
-              h5("For example, in this data set Toy Story is considered only a comedy, whereas Grumpier Old Men is considered both a comedy and a romance."),
-              br(),
-              h5("Additional attributes may be present in the data. (e.g. ReleaseDate, AvgRating in the table below.)"),
-              br(),
-              img(src='Data_setup.png', align = "center"),
-              br(),
-              h6("Want some data to get a feel for UpSetR?"),
-              tags$a(href = "movies.csv", "Download the movies data set here!"),
-              br(), br()
-            )
-          )
-          ),
- tabPanel("venneuler input",
-   sidebarLayout(
-     sidebarPanel(
+ tabPanel(
+   "Input",
+   tabsetPanel(
+       tabPanel("CSV File Upload",
+         sidebarLayout(
+           sidebarPanel(
+         fluidRow(
+         h5("CSV File Upload"),
+         fileInput('file1', label = h5("Upload csv file"), accept = c(
+           'text/csv', 'text/comma-separated-values', 'text/tab-separated-values', '.csv', '.tsv'))
+       ),
        fluidRow(
-         h5("venneuler input"),
-         tags$style(type="text/css", "textarea {width:100%}"),
-         tags$textarea(id="venn", placeholder='', rows = 3)
-       ), width = 12
-     ),
-     mainPanel(
-       h3("One of the most popular set visualization R packages is the venneuler package."),
-       h3("For this reason we have allowed the same input style for UpSetR."),
-       h3("Here is an example of the input. Copy and paste it above to see how it works."),
-       br(),
-       h4("A=12, B=12, C=5, A&B=4, A&C=2, B&C=1, A&B&C=2")
+         checkboxInput('header', label = h6('Header'), TRUE)
+       ),
+       fluidRow(
+         radioButtons('sep', label = h6('Separator'),
+                      choices = c(Comma=',', Semicolon =';', Tab='\t'),
+                      selected = ';'))
+         ),
+       mainPanel(
+         h3("Begin by uploading your correctly formatted .csv file, and selecting the correct separator."),
+         h4("A correctly formatted data set will denote the sets in binary. (e.g. The movie genres in the table below.)"),
+         h5(br()),
+         h5("For example, in this data set Toy Story is considered only a comedy, whereas Grumpier Old Men is considered both a comedy and a romance."),
+         br(),
+         h5("Additional attributes may be present in the data. (e.g. ReleaseDate, AvgRating in the table below.)"),
+         br(),
+         img(src='Data_setup.png', align = "center"),
+         br(),
+         h6("Want some data to get a feel for UpSetR?"),
+         tags$a(href = "movies.csv", "Download the movies data set here!"),
+         br(), br()
+       ))
+       ),
+   
+   tabPanel("venneuler input",
+     sidebarLayout(
+       sidebarPanel(
+         fluidRow(
+           h5("venneuler input"),
+           tags$style(type="text/css", "textarea {width:100%}"),
+           tags$textarea(id="venn", placeholder='', rows = 3)
+         )
+       ),
+       mainPanel(
+         h3("One of the most popular set visualization R packages is the venneuler package."),
+         h3("For this reason we have allowed the same input style for UpSetR."),
+         h3("Here is an example of the input. Copy and paste it above to see how it works."),
+         br(),
+         h4("A=12, B=12, C=5, A&B=4, A&C=2, B&C=1, A&B&C=2"),
+         br(),br(),
+         h5("** Restriction: No spaces allowed in the names. _ is acceptable.")
+       )
+     )
+   ),
+   tabPanel( "Enter as list",
+     sidebarLayout(
+       sidebarPanel(
+         fluidRow(
+           tags$textarea(id='name1', placeholder="List 1", rows=1),
+           tags$style(type="text/css", "textarea {width:100%}"),
+           tags$textarea(id='list1', placeholder='', rows = 3),
+           tags$textarea(id='name2', placeholder = "List 2", rows=1),
+           tags$style(type="text/css", "textarea {width:100%}"),
+           tags$textarea(id='list2', placeholder='', rows = 3),
+           tags$textarea(id='name3', placeholder = "List 3", rows=1),
+           tags$style(type="text/css", "textarea {width:100%}"),
+           tags$textarea(id='list3', placeholder='', rows = 3),
+           tags$textarea(id='name4', placeholder = "List 4", rows=1),
+           tags$style(type="text/css", "textarea {width:100%}"),
+           tags$textarea(id='list4', placeholder='', rows = 3),
+           tags$textarea(id='name5', placeholder = "List 5", rows=1),
+           tags$style(type="text/css", "textarea {width:100%}"),
+           tags$textarea(id='list5', placeholder='', rows = 3),
+           tags$textarea(id='name6', placeholder = "List 6", rows=1),
+           tags$style(type="text/css", "textarea {width:100%}"),
+           tags$textarea(id='list6', placeholder='', rows = 3)
+         )
+       ), mainPanel(              
+         h3("The set visualization web apps BioVenn and jvenn utilize the input style of lists containing unique elements."),
+         h3("This type of input is useful when wanting to compare sets by supplying, say, a list of gene IDs or SNPs"),
+         h3("Here is an example of the input. Copy and paste them into the respective lists to see how it works."),
+         br(),
+         h4("List 1: A, B, C, D, E, F, G, H"),
+         h4("List 2: A, B, D, F, I, J, K, L"),
+         h4("List 3: A, H, J, M, N, O, P, Q"),
+         h4("List 4: B, L, O, P, R, S, T, U"),
+         br(),br(),
+         h4("Example of jvenn with cancer SNPs:"),
+         img(src='jvenn.png', align = "right", width="103%"))
      )
    )
- ),
- tabPanel("Enter as lists",
-          sidebarLayout(
-            sidebarPanel(
-              fluidRow(
-                tags$textarea(id='name1', placeholder="List 1", rows=1),
-                tags$style(type="text/css", "textarea {width:100%}"),
-                tags$textarea(id='list1', placeholder='', rows = 3),
-                tags$textarea(id='name2', placeholder = "List 2", rows=1),
-                tags$style(type="text/css", "textarea {width:100%}"),
-                tags$textarea(id='list2', placeholder='', rows = 3),
-                tags$textarea(id='name3', placeholder = "List 3", rows=1),
-                tags$style(type="text/css", "textarea {width:100%}"),
-                tags$textarea(id='list3', placeholder='', rows = 3),
-                tags$textarea(id='name4', placeholder = "List 4", rows=1),
-                tags$style(type="text/css", "textarea {width:100%}"),
-                tags$textarea(id='list4', placeholder='', rows = 3),
-                tags$textarea(id='name5', placeholder = "List 5", rows=1),
-                tags$style(type="text/css", "textarea {width:100%}"),
-                tags$textarea(id='list5', placeholder='', rows = 3),
-                tags$textarea(id='name6', placeholder = "List 6", rows=1),
-                tags$style(type="text/css", "textarea {width:100%}"),
-                tags$textarea(id='list6', placeholder='', rows = 3)
-              ), width = 5),
-            mainPanel(
-              h3("The set visualization web apps BioVenn and jvenn utilize the input style of lists containing unique elements."),
-              h3("This type of input is useful when wanting to compare sets by supplying, say, a list of gene IDs or SNPs"),
-              h3("Here is an example of the input. Copy and paste them into the respective lists to see how it works."),
-              br(),
-              h4("List 1: A, B, C, D, E, F, G, H"),
-              h4("List 2: A, B, D, F, I, J, K, L"),
-              h4("List 3: A, H, J, M, N, O, P, Q"),
-              h4("List 4: B, L, O, P, R, S, T, U"),
-              br(),br(),
-              h4("Example of jvenn with cancer SNPs:"),
-              img(src='jvenn.png', align = "right", width="104%")
-              ,width=7)
-          )),
+   )),
  tabPanel("Your Data",
           mainPanel( tableOutput('data'),
                      textOutput('obs'), textOutput('venneuler'), width = 10
