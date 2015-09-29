@@ -186,16 +186,24 @@ shinyServer(function(input, output, session){
   
   orderdat <- reactive({
     orderdat <- as.character(input$order)
-    if((orderdat) == "degfreq"){
-      orderdat <- c("degree", "freq")
-    }
-    else if(orderdat == "degree"){
+    if(orderdat == "degree"){
       orderdat <- c("degree")
     }
     else if(orderdat == "freq"){
       orderdat <- "freq"
     }
     return(orderdat)
+  })
+  
+  decrease <- reactive({
+    decrease <- as.character(input$decreasing)
+    if(decrease == "inc"){
+      decrease <- FALSE
+    }
+    else if(decrease == "dec"){
+      decrease <- TRUE
+    }
+    return(decrease)
   })
   
   emptyIntersects <- reactive({
@@ -229,6 +237,7 @@ shinyServer(function(input, output, session){
                point.size = input$pointsize,
                sets = Specific_sets(),
                order.by = orderdat(),
+                decreasing = c(decrease()),
                 mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())),
                 empty.intersections = emptyIntersects())
     dev.off()
@@ -257,6 +266,7 @@ shinyServer(function(input, output, session){
             point.size = input$pointsize,
             sets = Specific_sets(),
             order.by = orderdat(),
+            decreasing = c(decrease()),
             mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())))
       
       dev.off()

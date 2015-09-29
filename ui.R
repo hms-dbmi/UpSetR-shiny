@@ -123,9 +123,14 @@ shinyUI(navbarPage("UpSet R",
                    ),
                    fluidRow(
                      selectInput("order", label = h6("Order by"), choices = list("Degree" = "degree",
-                                                                                 "Frequency" = "freq",
-                                                                                 "Degree then Frequency" = "degfreq"),
-                                 selected = "freq")),
+                                                                                 "Frequency" = "freq"),
+                                 selected = "freq")
+                     ),
+                   fluidRow(
+                     selectInput("decreasing", h6("Increasing/Decreasing"), choices = list("Increasing" = "inc",
+                                                                                           "Decreasing" = "dec"),
+                                 selected = "inc")
+                   ),
                    fluidRow(
                      checkboxInput('empty', label = "Empty Intersections", value = FALSE)
                      ),
