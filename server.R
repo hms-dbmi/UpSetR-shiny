@@ -131,6 +131,7 @@ My_data <- reactive({
   output$data <- renderTable({
     head(My_data(), 10)
   })
+  
   output$obs <- renderText({
     
 #     if(is.null(My_dat()) == F){x<-1} else{x<-0}
