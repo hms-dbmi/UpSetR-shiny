@@ -38,7 +38,11 @@ shinyUI(navbarPage("UpSet R",
        fluidRow(
          radioButtons('sep', label = h6('Separator'),
                       choices = c(Comma=',', Semicolon =';', Tab='\t'),
-                      selected = ';'))
+                      selected = ';')),
+       fluidRow(
+         br(),
+         actionButton("confirm1", "Confirm")
+       )
          ),
        mainPanel(
          h3("Begin by uploading your correctly formatted .csv file, and selecting the correct separator."),
@@ -52,7 +56,7 @@ shinyUI(navbarPage("UpSet R",
          br(),
          h6("Want some data to get a feel for UpSetR?"),
          tags$a(href = "movies.csv", "Download the movies data set here!"),
-         br(), br()
+         br(), br(), width =7
        ))
        ),
    
@@ -63,7 +67,10 @@ shinyUI(navbarPage("UpSet R",
            h5("venneuler input"),
            tags$style(type="text/css", "textarea {width:100%}"),
            tags$textarea(id="venn", placeholder='', rows = 3)
-         )
+         ),
+         fluidRow(
+           br(), actionButton("confirm2", "Confirm")
+           )
        ),
        mainPanel(
          h3("One of the most popular set visualization R packages is the venneuler package."),
@@ -73,7 +80,7 @@ shinyUI(navbarPage("UpSet R",
          h4("A=12, B=12, C=5, A&B=4, A&C=2, B&C=1, A&B&C=2"),
          br(),br(),
          h5("** Restriction: No spaces allowed in the names. _ is acceptable.")
-       )
+       , width =7)
      )
    ),
    tabPanel( "Enter as list",
@@ -98,6 +105,9 @@ shinyUI(navbarPage("UpSet R",
            tags$textarea(id='name6', placeholder = "List 6", rows=1),
            tags$style(type="text/css", "textarea {width:100%}"),
            tags$textarea(id='list6', placeholder='', rows = 3)
+         ),
+         fluidRow(
+           br(), actionButton("confirm3", "Confirm")
          )
        ), mainPanel(              
          h3("The set visualization web apps BioVenn and jvenn utilize the input style of lists containing unique elements."),
@@ -110,7 +120,8 @@ shinyUI(navbarPage("UpSet R",
          h4("List 4: B, L, O, P, R, S, T, U"),
          br(),br(),
          h4("Example of jvenn with cancer SNPs:"),
-         img(src='jvenn.png', align = "right", width="103%"))
+         img(src='jvenn.png', align = "right", width="103%")
+         ,width=7)
      )
    )
    )),

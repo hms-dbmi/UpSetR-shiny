@@ -6,6 +6,44 @@ library(UpSetR)
 source("converters.R")
 
 shinyServer(function(input, output, session){
+  
+  attr(input, "readonly") <- FALSE
+
+  observeEvent(input$confirm1,{
+    input$confirm1[1] <- 1
+    input$confirm2[1] <- 0
+    input$confirm3[1] <- 0
+  })  
+  
+  observeEvent(input$confirm2,{
+    input$confirm1[1] <- 0
+    input$confirm2[1] <- 1
+    input$confirm3[1] <- 0
+  })  
+  
+  observeEvent(input$confirm3,{
+    input$confirm1[1] <- 0
+    input$confirm2[1] <- 0
+    input$confirm3[1] <- 1
+  })  
+
+  confirmed <- reactive({
+    one <- input$confirm1[1]
+    two <- input$confirm2[1]
+    three <- input$confirm3[1]
+    all <- c(one,two,three)
+    maximum <- which(all == max(all))
+    if(maximum==1){
+      return(1)
+      }
+    if(maximum==2){
+      return(2)
+    }
+    if(maximum==3){
+      return(3)
+    }
+  })
+  
   My_dat <- reactive({  
     inFile <- input$file1
     
@@ -14,6 +52,23 @@ shinyServer(function(input, output, session){
     
     read.csv(inFile$datapath, header = input$header,
              sep = input$sep, quote = input$quote)
+  })
+  
+  venneulerData <- reactive({
+    string <- input$venn
+    if(string != ""){
+      string <- as.list(unlist(strsplit(string, ",")))
+      names <- lapply(string, function(x){x <- unlist(strsplit(x, "=")); x <- x[1]})
+      names <- unlist(lapply(names, function(x){x <- gsub(" ", "", x)}))
+      values <- as.numeric(unlist(lapply(string, function(x){x <- unlist(strsplit(x,"=")); x <- x[2]})))
+      names(values) <- names
+      venneuler <- upsetVenneuler(values)
+      return(venneuler)
+    }
+    else{
+      venneuler <- NULL
+      return(venneuler)
+    }
   })
   
   listData <- reactive({
@@ -53,37 +108,38 @@ shinyServer(function(input, output, session){
       data <- NULL
     }
     return(data)
-    
   })
   
-  My_data <- reactive({
-   if(is.null(My_dat()) == T && is.null(listData()) == T && is.null(venneulerData()) == F){
-      My_data <- venneulerData()
-    }
-    else if(is.null(venneulerData()) == T && is.null(listData()) == T && is.null(My_dat()) == F){
-      My_data <- My_dat()
-    }
-    else if(is.null(venneulerData()) == T && is.null(My_dat())==T && is.null(listData()) == F){
-      My_data <- listData()
-    }
-    else{
-      My_data <- NULL
-    }
-    return(My_data)
-  })
+  
+My_data <- reactive({
+  if(confirmed() == 1){
+    My_data <- My_dat()
+  }
+  else if(confirmed()==2){
+    My_data <- venneulerData()
+  }
+  else if(confirmed()==3){
+    My_data <- listData()
+  }
+  else{
+    return(NULL)
+  }
+  return(My_data)
+})
+  
   
   output$data <- renderTable({
     head(My_data(), 10)
   })
   output$obs <- renderText({
     
-    if(is.null(My_dat()) == F){x<-1} else{x<-0}
-    if(is.null(listData()) == F){y<-1} else{y<-0}
-    if(is.null(venneulerData()) == F){z<-1} else{z<-0}
-    if((x+y+z)>1){
-      totalobs <- "You have data in two different input formats. Please remove data from one of the formats."
-    }
-    else if(is.null(My_data()) == T){
+#     if(is.null(My_dat()) == F){x<-1} else{x<-0}
+#     if(is.null(listData()) == F){y<-1} else{y<-0}
+#     if(is.null(venneulerData()) == F){z<-1} else{z<-0}
+#     if((x+y+z)>1){
+#       totalobs <- "You have data in two different input formats. Please remove data from one of the formats."
+#     }
+    if(length(My_data()) == 0){
       totalobs <- "This is where your data will show!"
     }
     else{
@@ -93,33 +149,10 @@ shinyServer(function(input, output, session){
     return(totalobs)
   })
   
-  venneulerData <- reactive({
-    string <- input$venn
-    if(string != ""){
-    string <- as.list(unlist(strsplit(string, ",")))
-    names <- lapply(string, function(x){x <- unlist(strsplit(x, "=")); x <- x[1]})
-    names <- unlist(lapply(names, function(x){x <- gsub(" ", "", x)}))
-    values <- as.numeric(unlist(lapply(string, function(x){x <- unlist(strsplit(x,"=")); x <- x[2]})))
-    names(values) <- names
-    venneuler <- upsetVenneuler(values)
-    return(venneuler)
-    }
-    else{
-      venneuler <- NULL
-      return(venneuler)
-    }
-  })
    
   output$plot_text <- renderText({
     
-    if(is.null(My_dat()) == F){x<-1} else{x<-0}
-    if(is.null(listData()) == F){y<-1} else{y<-0}
-    if(is.null(venneulerData()) == F){z<-1} else{z<-0}
-    if((x+y+z)>1){
-      plotText <- "You have data in two different input formats. Please remove data from one of the formats."
-    }
-    
-    else if(is.null(My_data()) == T){
+    if(is.null(My_data()) == T){
       plotText <- "This is where your plot will show!"
     }
     else{
