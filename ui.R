@@ -1,6 +1,7 @@
 library(shiny)
 
-shinyUI(navbarPage("UpSet R",
+shinyUI(navbarPage("UpSetR",
+                   theme = shinytheme("united"),
  tabPanel("Welcome!",
     mainPanel(
         h1("Welcome to the UpSetR Shiny App!"),
@@ -125,7 +126,7 @@ shinyUI(navbarPage("UpSet R",
      )
    )
    )),
- tabPanel("Your Data",
+ tabPanel("Data Summary",
           mainPanel( tableOutput('data'),
                      textOutput('obs'), textOutput('venneuler'), width = 10
           )),
@@ -146,7 +147,7 @@ shinyUI(navbarPage("UpSet R",
                    fluidRow(
                      selectInput("decreasing", h6("Increasing/Decreasing"), choices = list("Increasing" = "inc",
                                                                                            "Decreasing" = "dec"),
-                                 selected = "inc")
+                                 selected = "dec")
                    ),
                    fluidRow(
                      checkboxInput('empty', label = "Empty Intersections", value = FALSE)
