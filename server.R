@@ -141,15 +141,24 @@ My_data <- reactive({
 #       totalobs <- "You have data in two different input formats. Please remove data from one of the formats."
 #     }
     if(length(My_data()) == 0){
-      totalobs <- "This is where your data will show!"
+      totalobs <- NULL
     }
     else{
       totalobs <- as.character(nrow(My_data()))
-      totalobs <- paste("Total Observations:", totalobs, sep = " ")
+      totalobs <- paste("Total Columns:", totalobs, "\n", sep = " ")
     }
     return(totalobs)
   })
   
+  output$datatable <- renderText({
+    if(is.null(My_data()) == T){
+      text <- paste("---Sample Table of Data---\n", "\n   No Data Entered")
+    }
+    else{
+      text <- paste("---Sample Table of Data---\n")
+    }
+    return(text)
+  })
    
   output$plot_text <- renderText({
     
@@ -191,6 +200,74 @@ My_data <- reactive({
   
   startEnd <- reactive({
     startEnd <- FindStartEnd(My_data())
+  })
+  
+  setSizes <- reactive({
+    if(is.null(My_data()) != T){
+    sizes <- colSums(My_data()[startEnd()[1]:startEnd()[2]])
+    names <- names(sizes); sizes <- as.numeric(sizes);
+    maxchar <- max(nchar(names))
+    total <- list()
+    for(i in 1:length(names)){
+      spaces <- as.integer((maxchar - nchar(names[i]))+1)
+      spaces <- paste(rep(" ", each=spaces), collapse = "")
+      total[[i]] <- paste(paste(names[i], ":", sep=""), spaces, sizes[i], "\n", sep="")
+    }
+    total <- unlist(total)
+    total <- paste(total, collapse = " ")
+    return(total)
+    }
+    else{
+      return(NULL)
+    }
+  })
+  
+  output$setsizes <- renderText({
+    if(is.null(setSizes()) != T){
+    paste("---Set Sizes---\n", setSizes())
+    }
+    else{
+      paste("---Set Sizes---\n", "\n   No Data Entered")
+    }
+  })
+  
+  intersectionSizes <- reactive({
+    if(is.null(My_data()) != T){
+    data <- My_data()[startEnd()[1]:startEnd()[2]]
+    ncols <- ncol(data)
+    data <- count(data)
+    data <- data[order(data$freq, decreasing = T), ]
+    names <- apply(data[1:ncols], 1, function(x){ name <- names(x[which(x == 1)]); return(name);})
+    nameSize <- list()
+    for(i in 1:length(names)){
+      if(length(names[[i]]) > 1){
+        names[[i]] <- paste(names[[i]], collapse = "|")
+      }
+    }
+    maxchar <- max(nchar(names))
+    for(i in 1:length(names)){
+      spaces <- as.integer((maxchar - nchar(names[[i]]))+1)
+      spaces <- paste(rep(" ", each=spaces), collapse = "")
+      nameSize[[i]] <- paste(paste(names[[i]], ":", sep = ""), spaces, data$freq[i], "\n", sep = "")
+    }
+    
+    namesSize <- unlist(nameSize)
+    nameSize <- paste(nameSize, collapse = " ")
+    return(nameSize)
+    }
+    else{
+      return(NULL)
+    }
+    
+  })
+  
+   output$intersections <- renderText({
+     if(is.null(intersectionSizes()) != T){
+     paste("---Intersection Sizes---\n", intersectionSizes())
+     }
+     else{
+       paste("---Intersection Sizes---\n", "\n   No Data Entered")
+     }
   })
   
   output$sets <- renderUI({

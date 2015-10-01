@@ -127,8 +127,14 @@ shinyUI(navbarPage("UpSetR",
    )
    )),
  tabPanel("Data Summary",
-          mainPanel( tableOutput('data'),
-                     textOutput('obs'), textOutput('venneuler'), width = 10
+          mainPanel(verbatimTextOutput('datatable'),
+            tableOutput('data'),
+                     textOutput('obs'),
+            br(),
+            verbatimTextOutput('setsizes'),
+            br(),
+                    verbatimTextOutput('intersections'),
+                textOutput('venneuler'), width = 10
           )),
       tabPanel("UpSet Plot",
                sidebarLayout(
