@@ -1,7 +1,7 @@
 library(shiny)
 
 shinyUI(navbarPage("UpSetR",
-                   theme = shinytheme("flatly"),
+                   theme = shinythemes::shinytheme("flatly"),
  tabPanel("Welcome!",
     mainPanel(
         h1("Welcome to the UpSetR Shiny App!"),

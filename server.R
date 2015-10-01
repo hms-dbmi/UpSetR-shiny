@@ -3,6 +3,7 @@ library(ggplot2)
 library(gridExtra)
 library(plyr)
 library(UpSetR)
+library(shinythemes)
 source("converters.R")
 
 shinyServer(function(input, output, session){
