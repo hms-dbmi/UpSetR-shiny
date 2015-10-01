@@ -3,25 +3,25 @@ library(shiny)
 shinyUI(navbarPage("UpSetR",
                    theme = shinythemes::shinytheme("flatly"),
  tabPanel("Welcome!",
+          sidebarLayout(
+            sidebarPanel(
+              h2("Welcome to the UpSetR Shiny App!"),
+              br(),
+              h4(HTML("To begin, input your data using one of the three input styles.")),
+              
+              tags$p(HTML("<ol start='1'> <li>\"Upload a file\" takes a correctly formatted.csv file.</li>
+                          <li>\"venneuler input\" takes the input used by the venneuler R package <a href ='https://cran.r-project.org/web/packages/venneuler/venneuler.pdf'> (Wilkinson, 2015) </a></li>
+                          <li>\"Enter as lists\" takes up to 6 different lists that contain unique elements, similar to that used in
+                          the web applications BioVenn <a href='http://www.biomedcentral.com/content/pdf/1471-2164-9-488.pdf'> (Hulsen et al., 2008)</a> and jvenn <a href=http://www.biomedcentral.com/content/pdf/1471-2105-15-293.pdf> (Bardou et al., 2014) </a></li></ol>")),
+              br(),
+              h4('To get an overview of your data click the "Data Summary" tab.'),
+              br(),
+              h4('To view and explore your data click on the "UpSetR plot" tab.')
+              ,width=5
+            ),
     mainPanel(
-        h1("Welcome to the UpSetR Shiny App!"),
-        br(),
-        h3("To begin, input your data using one of the three available input styles."),
-        br(),
-        h4('1. "Upload a file" takes a correctly formatted .csv file'),
-        h4('2. "venneuler input" takes the input used by the venneuler R package', 
-           tags$a(href = "https://cran.r-project.org/web/packages/venneuler/venneuler.pdf", "(Wilkinson, 2015)")),
-        h4('3. "Enter as lists" takes up to 6 different lists that contain unique elements, similar to that used in
-           the web applications BioVenn', tags$a(href = "http://www.biomedcentral.com/content/pdf/1471-2164-9-488.pdf", "(Hulsen et al., 2008)"),
-           'and jvenn', tags$a(href = "http://www.biomedcentral.com/content/pdf/1471-2105-15-293.pdf", "(Bardou et al., 2014)")),
-        br(),
-        h4("Additional information and examples on how to use the input styles are contained in their respective tabs."),
-        br(),br(),
-        h3('To check that your data was read correctly click on the tab called "Your data".'),
-        br(), br(),
-        h3("If your data is correct, click on the 'UpSetR plot' tab to view your UpSet plot and explore your data!"),
-        img(src='Rplot.png', align = "center"), width = 10
-        )),
+        img(src='Rplot.png', align = "center"), width = 7
+        ))),
  tabPanel(
    "Input",
    tabsetPanel(
