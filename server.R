@@ -205,6 +205,13 @@ My_data <- reactive({
   setSizes <- reactive({
     if(is.null(My_data()) != T){
     sizes <- colSums(My_data()[startEnd()[1]:startEnd()[2]])
+    sizes <- sizes[order(sizes, decreasing = T)]
+    if(length(Specific_sets()) == 0){
+      sizes <- sizes[head(names(sizes), 5)]
+    }
+    else{
+      sizes <- sizes[match(Specific_sets(), names(sizes))]
+    }
     names <- names(sizes); sizes <- as.numeric(sizes);
     maxchar <- max(nchar(names))
     total <- list()
@@ -234,6 +241,15 @@ My_data <- reactive({
   intersectionSizes <- reactive({
     if(is.null(My_data()) != T){
     data <- My_data()[startEnd()[1]:startEnd()[2]]
+    if(length(Specific_sets()) == 0){
+      topfive <- colSums(data)
+      topfive <- as.character(head(names(topfive[order(topfive, decreasing = T)]), 5))
+      data <- data[topfive]
+    }
+    else{
+      data <- data[Specific_sets()]
+    }
+    data <- data[which(rowSums(data) != 0), ]
     ncols <- ncol(data)
     data <- count(data)
     data <- data[order(data$freq, decreasing = T), ]
