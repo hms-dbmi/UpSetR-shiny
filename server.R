@@ -14,18 +14,21 @@ shinyServer(function(input, output, session){
     input$confirm1[1] <- 1
     input$confirm2[1] <- 0
     input$confirm3[1] <- 0
+    input$Select <- NULL
   })  
   
   observeEvent(input$confirm2,{
     input$confirm1[1] <- 0
     input$confirm2[1] <- 1
     input$confirm3[1] <- 0
+    input$Select <- NULL
   })  
   
   observeEvent(input$confirm3,{
     input$confirm1[1] <- 0
     input$confirm2[1] <- 0
     input$confirm3[1] <- 1
+    input$Select <- NULL
   })  
 
   confirmed <- reactive({
