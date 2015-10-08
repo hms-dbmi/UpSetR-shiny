@@ -23,14 +23,13 @@ shinyUI(navbarPage("UpSetR",
         img(src='Rplot.png', align = "center"), width = 7
         ))),
  tabPanel(
-   "Input",
+   "1. Enter Data",
    tabsetPanel(
-       tabPanel("CSV File Upload",
+       tabPanel("file",
          sidebarLayout(
            sidebarPanel(
          fluidRow(
-         h5("CSV File Upload"),
-         fileInput('file1', label = h5("Upload csv file"), accept = c(
+         fileInput('file1', label = h5("Upload .csv file"), accept = c(
            'text/csv', 'text/comma-separated-values', 'text/tab-separated-values', '.csv', '.tsv'))
        ),
        fluidRow(
@@ -60,31 +59,7 @@ shinyUI(navbarPage("UpSetR",
          br(), br(), width =7
        ))
        ),
-   
-   tabPanel("venneuler input",
-     sidebarLayout(
-       sidebarPanel(
-         fluidRow(
-           h5("venneuler input"),
-           tags$style(type="text/css", "textarea {width:100%}"),
-           tags$textarea(id="venn", placeholder='', rows = 3)
-         ),
-         fluidRow(
-           br(), actionButton("confirm2", "Confirm")
-           )
-       ),
-       mainPanel(
-         h3("One of the most popular set visualization R packages is the venneuler package."),
-         h3("For this reason we have allowed the same input style for UpSetR."),
-         h3("Here is an example of the input. Copy and paste it above to see how it works."),
-         br(),
-         h4("A=12, B=12, C=5, A&B=4, A&C=2, B&C=1, A&B&C=2"),
-         br(),br(),
-         h5("** Restriction: No spaces allowed in the names. _ is acceptable.")
-       , width =7)
-     )
-   ),
-   tabPanel( "Enter as list",
+   tabPanel( "list",
      sidebarLayout(
        sidebarPanel(
          fluidRow(
@@ -124,9 +99,32 @@ shinyUI(navbarPage("UpSetR",
          img(src='jvenn.png', align = "right", width="103%")
          ,width=7)
      )
+   ),
+   tabPanel("expression",
+            sidebarLayout(
+              sidebarPanel(
+                fluidRow(
+                  h5("expression input"),
+                  tags$style(type="text/css", "textarea {width:100%}"),
+                  tags$textarea(id="venn", placeholder='', rows = 3)
+                ),
+                fluidRow(
+                  br(), actionButton("confirm2", "Confirm")
+                )
+              ),
+              mainPanel(
+                h3("One of the most popular set visualization R packages is the venneuler package."),
+                h3("For this reason we have allowed the same input style for UpSetR."),
+                h3("Here is an example of the input. Copy and paste it above to see how it works."),
+                br(),
+                h4("A=12, B=12, C=5, A&B=4, A&C=2, B&C=1, A&B&C=2"),
+                br(),br(),
+                h5("** Restriction: No spaces allowed in the names. _ is acceptable.")
+                , width =7)
+            )
    )
    )),
- tabPanel("Data Summary",
+ tabPanel("2. View Data Summary",
           mainPanel(verbatimTextOutput('datatable'),
             tableOutput('data'),
                      textOutput('obs'),
@@ -136,7 +134,7 @@ shinyUI(navbarPage("UpSetR",
                     verbatimTextOutput('intersections'),
                 textOutput('venneuler'), width = 10
           )),
-      tabPanel("UpSet Plot",
+      tabPanel("3. UpSet Plot",
                sidebarLayout(
                  sidebarPanel(
                    fluidRow(

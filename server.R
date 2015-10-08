@@ -403,11 +403,10 @@ My_data <- reactive({
       dev.off()
     }
     )
-  
-  
+
+    
 })
 
 
-  
 
 
