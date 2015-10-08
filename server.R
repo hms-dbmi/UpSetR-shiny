@@ -14,6 +14,7 @@ shinyServer(function(input, output, session){
     input$confirm1[1] <- 1
     input$confirm2[1] <- 0
     input$confirm3[1] <- 0
+    withProgress(message = "Confirmed success", value = 0, {setProgress(1)})
     input$Select <- NULL
   })  
   
@@ -21,6 +22,7 @@ shinyServer(function(input, output, session){
     input$confirm1[1] <- 0
     input$confirm2[1] <- 1
     input$confirm3[1] <- 0
+    withProgress(message = "Confirmed success", value = 0, {setProgress(1)})
     input$Select <- NULL
   })  
   
@@ -28,6 +30,7 @@ shinyServer(function(input, output, session){
     input$confirm1[1] <- 0
     input$confirm2[1] <- 0
     input$confirm3[1] <- 1
+    withProgress(message = "Confirmed success", value = 0, {setProgress(1)})
     input$Select <- NULL
   })  
 
