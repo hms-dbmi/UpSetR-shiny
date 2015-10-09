@@ -7,7 +7,10 @@ upsetVenneuler <- function(vd){
   names(data) <- sets
   counts <- lapply(vd, function(x) unlist(x))
   names(counts[[1]]) <- NULL
-  counts[[1]] <- as.numeric(counts[[1]])
+  counts[[1]] <- na.omit(as.numeric(counts[[1]]))
+  if(length(unlist(counts)) != length(intersections)){
+    return(NULL)
+  }
   
   for(i in seq(intersections)) {
     cols <- match(names(data), intersections[[i]])

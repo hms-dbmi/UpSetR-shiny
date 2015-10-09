@@ -14,7 +14,12 @@ shinyServer(function(input, output, session){
     input$confirm1[1] <- 1
     input$confirm2[1] <- 0
     input$confirm3[1] <- 0
+    if(is.null(My_data())){
+      withProgress(message = "Confirmed failure", value = 0, {setProgress(1)})
+    }
+    else{
     withProgress(message = "Confirmed success", value = 0, {setProgress(1)})
+    }
     input$Select <- NULL
   })  
   
@@ -22,7 +27,12 @@ shinyServer(function(input, output, session){
     input$confirm1[1] <- 0
     input$confirm2[1] <- 1
     input$confirm3[1] <- 0
-    withProgress(message = "Confirmed success", value = 0, {setProgress(1)})
+    if(is.null(My_data())){
+      withProgress(message = "Confirmed failure", value = 0, {setProgress(1)})
+    }
+    else{
+      withProgress(message = "Confirmed success", value = 0, {setProgress(1)})
+    }
     input$Select <- NULL
   })  
   
@@ -30,7 +40,12 @@ shinyServer(function(input, output, session){
     input$confirm1[1] <- 0
     input$confirm2[1] <- 0
     input$confirm3[1] <- 1
-    withProgress(message = "Confirmed success", value = 0, {setProgress(1)})
+    if(is.null(My_data())){
+      withProgress(message = "Confirmed failure", value = 0, {setProgress(1)})
+    }
+    else{
+      withProgress(message = "Confirmed success", value = 0, {setProgress(1)})
+    }
     input$Select <- NULL
   })  
 
@@ -139,33 +154,33 @@ My_data <- reactive({
     head(My_data(), 10)
   })
   
-  output$obs <- renderText({
-    
-#     if(is.null(My_dat()) == F){x<-1} else{x<-0}
-#     if(is.null(listData()) == F){y<-1} else{y<-0}
-#     if(is.null(venneulerData()) == F){z<-1} else{z<-0}
-#     if((x+y+z)>1){
-#       totalobs <- "You have data in two different input formats. Please remove data from one of the formats."
+#   output$obs <- renderText({
+#     
+#      if(is.null(My_dat()) == F){x<-1} else{x<-0}
+#      if(is.null(listData()) == F){y<-1} else{y<-0}
+#      if(is.null(venneulerData()) == F){z<-1} else{z<-0}
+#      if((x+y+z)>1){
+#        totalobs <- "You have data in two different input formats. Please remove data from one of the formats."
+#      }
+#     if(length(My_data()) == 0){
+#       totalobs <- NULL
 #     }
-    if(length(My_data()) == 0){
-      totalobs <- NULL
-    }
-    else{
-      totalobs <- as.character(nrow(My_data()))
-      totalobs <- paste("Total Columns:", totalobs, "\n", sep = " ")
-    }
-    return(totalobs)
-  })
+#     else{
+#       totalobs <- as.character(nrow(My_data()))
+#       totalobs <- paste("Total Columns:", totalobs, "\n", sep = " ")
+#     }
+#     return(totalobs)
+#   })
   
-  output$datatable <- renderText({
-    if(is.null(My_data()) == T){
-      text <- paste("---Sample Table of Data---\n", "\n   No Data Entered")
-    }
-    else{
-      text <- paste("---Sample Table of Data---\n")
-    }
-    return(text)
-  })
+#   output$datatable <- renderText({
+#     if(is.null(My_data()) == T){
+#       text <- paste("---Sample Table of Data---\n", "\n   No Data Entered")
+#     }
+#     else{
+#       text <- paste("---Sample Table of Data---\n")
+#     }
+#     return(text)
+#   })
    
   output$plot_text <- renderText({
     
@@ -241,57 +256,57 @@ My_data <- reactive({
     paste("---Set Sizes---\n", setSizes())
     }
     else{
-      paste("---Set Sizes---\n", "\n   No Data Entered")
+      paste("---Set Sizes---\n", "\n No Data Entered")
     }
   })
   
-  intersectionSizes <- reactive({
-    if(is.null(My_data()) != T){
-    data <- My_data()[startEnd()[1]:startEnd()[2]]
-    if(length(Specific_sets()) == 0){
-      topfive <- colSums(data)
-      topfive <- as.character(head(names(topfive[order(topfive, decreasing = T)]), 5))
-      data <- data[topfive]
-    }
-    else{
-      data <- data[Specific_sets()]
-    }
-    data <- data[which(rowSums(data) != 0), ]
-    ncols <- ncol(data)
-    data <- count(data)
-    data <- data[order(data$freq, decreasing = T), ]
-    names <- apply(data[1:ncols], 1, function(x){ name <- names(x[which(x == 1)]); return(name);})
-    nameSize <- list()
-    for(i in 1:length(names)){
-      if(length(names[[i]]) > 1){
-        names[[i]] <- paste(names[[i]], collapse = "|")
-      }
-    }
-    maxchar <- max(nchar(names))
-    for(i in 1:length(names)){
-      spaces <- as.integer((maxchar - nchar(names[[i]]))+1)
-      spaces <- paste(rep(" ", each=spaces), collapse = "")
-      nameSize[[i]] <- paste(paste(names[[i]], ":", sep = ""), spaces, data$freq[i], "\n", sep = "")
-    }
-    
-    namesSize <- unlist(nameSize)
-    nameSize <- paste(nameSize, collapse = " ")
-    return(nameSize)
-    }
-    else{
-      return(NULL)
-    }
-    
-  })
+#   intersectionSizes <- reactive({
+#     if(is.null(My_data()) != T){
+#     data <- My_data()[startEnd()[1]:startEnd()[2]]
+#     if(length(Specific_sets()) == 0){
+#       topfive <- colSums(data)
+#       topfive <- as.character(head(names(topfive[order(topfive, decreasing = T)]), 5))
+#       data <- data[topfive]
+#     }
+#     else{
+#       data <- data[Specific_sets()]
+#     }
+#     data <- data[which(rowSums(data) != 0), ]
+#     ncols <- ncol(data)
+#     data <- count(data)
+#     data <- data[order(data$freq, decreasing = T), ]
+#     names <- apply(data[1:ncols], 1, function(x){ name <- names(x[which(x == 1)]); return(name);})
+#     nameSize <- list()
+#     for(i in 1:length(names)){
+#       if(length(names[[i]]) > 1){
+#         names[[i]] <- paste(names[[i]], collapse = "|")
+#       }
+#     }
+#     maxchar <- max(nchar(names))
+#     for(i in 1:length(names)){
+#       spaces <- as.integer((maxchar - nchar(names[[i]]))+1)
+#       spaces <- paste(rep(" ", each=spaces), collapse = "")
+#       nameSize[[i]] <- paste(paste(names[[i]], ":", sep = ""), spaces, data$freq[i], "\n", sep = "")
+#     }
+#     
+#     namesSize <- unlist(nameSize)
+#     nameSize <- paste(nameSize, collapse = " ")
+#     return(nameSize)
+#     }
+#     else{
+#       return(NULL)
+#     }
+#     
+#   })
   
-   output$intersections <- renderText({
-     if(is.null(intersectionSizes()) != T){
-     paste("---Intersection Sizes---\n", intersectionSizes())
-     }
-     else{
-       paste("---Intersection Sizes---\n", "\n   No Data Entered")
-     }
-  })
+#    output$intersections <- renderText({
+#      if(is.null(intersectionSizes()) != T){
+#      paste("---Intersection Sizes---\n", intersectionSizes())
+#      }
+#      else{
+#        paste("---Intersection Sizes---\n", "\n   No Data Entered")
+#      }
+#   })
   
   output$sets <- renderUI({
     if(is.null(My_data()) == T){

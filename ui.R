@@ -125,13 +125,16 @@ shinyUI(navbarPage("UpSetR",
    )
    )),
  tabPanel("2. View Data Summary",
-          mainPanel(verbatimTextOutput('datatable'),
-            tableOutput('data'),
-                     textOutput('obs'),
-            br(),
+           mainPanel(
+#             verbatimTextOutput('datatable'),
+#             tableOutput('data'),
+#                      textOutput('obs'),
+#            br(),
+            tags$style(type='text/css', '#setsizes {background-color: rgba(255,255,255,0); color: black;
+                       border-color:rgba(255,255,255, 0);}'),
             verbatimTextOutput('setsizes'),
             br(),
-                    verbatimTextOutput('intersections'),
+                    # verbatimTextOutput('intersections'),
                 textOutput('venneuler'), width = 10
           )),
       tabPanel("3. UpSet Plot",
