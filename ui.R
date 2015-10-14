@@ -45,16 +45,26 @@ shinyUI(navbarPage("UpSetR",
        )
          ),
        mainPanel(
-         h3("Begin by uploading your correctly formatted .csv file, and selecting the correct separator."),
-         h4("A correctly formatted data set will denote the sets in binary. (e.g. The movie genres in the table below.)"),
-         h5(br()),
-         h5("For example, in this data set Toy Story is considered only a comedy, whereas Grumpier Old Men is considered both a comedy and a romance."),
+         tags$h3(HTML("<u>Instructions</u>")), 
+         p("To use this method, begin by uploading a correctly formatted .csv file.
+           A correctly formatted .csv file is encoded in binary and set up so that each
+           column represents a set, and each row represents an element. If an element is
+           in the set it is represented as a 1 in that position. If an element is not in
+           the set it is represented as a 0."),
          br(),
-         h5("Additional attributes may be present in the data. (e.g. ReleaseDate, AvgRating in the table below.)"),
+         p("After uploading the file, choose the correct seperator. If the elements in each 
+           column are seperated by a ' , ' choose comma, by a ' ; ' choose semicolon, or by tabs choose tab."),
+#          h3("Begin by uploading your correctly formatted .csv file, and selecting the correct separator."),
+#          h4("A correctly formatted data set will denote the sets in binary. (e.g. The movie genres in the table below.)"),
+#          h5(br()),
+#          h5("For example, in this data set Toy Story is considered only a comedy, whereas Grumpier Old Men is considered both a comedy and a romance."),
+#          br(),
+#          h5("Additional attributes may be present in the data. (e.g. ReleaseDate, AvgRating in the table below.)"),
          br(),
-         img(src='Data_setup.png', align = "center"),
-         br(),
-         h6("Want some data to get a feel for UpSetR?"),
+         # img(src='Data_setup.png', align = "center"),
+         # h6("Want some data to get a feel for UpSetR?"),
+         p("To see what a correctly formatted data set with a comma (' , ') seperator
+           looks like download the movies file below."),
          tags$a(href = "movies.csv", "Download the movies data set here!"),
          br(), br(), width =7
        ))
@@ -85,18 +95,33 @@ shinyUI(navbarPage("UpSetR",
          fluidRow(
            br(), actionButton("confirm3", "Confirm")
          )
-       ), mainPanel(              
-         h3("The set visualization web apps BioVenn and jvenn utilize the input style of lists containing unique elements."),
-         h3("This type of input is useful when wanting to compare sets by supplying, say, a list of gene IDs or SNPs"),
-         h3("Here is an example of the input. Copy and paste them into the respective lists to see how it works."),
+       ), mainPanel( 
+         tags$h3(HTML("<u>Instructions</u>")), 
+         p("The input style of lists is useful when wanting to compare sets by supplying , say 
+           a list of gene IDs or SNPs. To use this format enter a list of elements seperated by a
+           comma to each input box. These elements can be entered as numbers, letters, IDs, words, etc.
+           The only limitation to entering the lists is having spaces in the element names. As an
+           alternative an underscore (' _ ') character can be used to to substitute for the spaces.
+           To give each set a name, enter the names into the bars where the word 'List' followed by
+           a number is grayed out."),
+         br(), br(),
+         p("To see how the list format works copy and paste each list of letters into their respective input boxes."),
          br(),
-         h4("List 1: A, B, C, D, E, F, G, H"),
-         h4("List 2: A, B, D, F, I, J, K, L"),
-         h4("List 3: A, H, J, M, N, O, P, Q"),
-         h4("List 4: B, L, O, P, R, S, T, U"),
-         br(),br(),
-         h4("Example of jvenn with cancer SNPs:"),
-         img(src='jvenn.png', align = "right", width="103%")
+         p("List 1: A, B, C, D, E, F, G, H"),
+         p("List 2: A, B, D, F, I, J, K, L"),
+         p("List 3: A, H, J, M, N, O, P, Q"),
+         p("List 4: B, L, O, P, R, S, T, U")
+#          h3("The set visualization web apps BioVenn and jvenn utilize the input style of lists containing unique elements."),
+#          h3("This type of input is useful when wanting to compare sets by supplying, say, a list of gene IDs or SNPs"),
+#          h3("Here is an example of the input. Copy and paste them into the respective lists to see how it works."),
+#          br(),
+#          h4("List 1: A, B, C, D, E, F, G, H"),
+#          h4("List 2: A, B, D, F, I, J, K, L"),
+#          h4("List 3: A, H, J, M, N, O, P, Q"),
+#          h4("List 4: B, L, O, P, R, S, T, U"),
+#          br(),br(),
+#          h4("Example of jvenn with cancer SNPs:"),
+#          img(src='jvenn.png', align = "right", width="103%")
          ,width=7)
      )
    ),
@@ -106,20 +131,30 @@ shinyUI(navbarPage("UpSetR",
                 fluidRow(
                   h5("expression input"),
                   tags$style(type="text/css", "textarea {width:100%}"),
-                  tags$textarea(id="venn", placeholder='', rows = 3)
+                  tags$textarea(id="venn", placeholder='', rows = 10)
                 ),
                 fluidRow(
                   br(), actionButton("confirm2", "Confirm")
                 )
               ),
               mainPanel(
-                h3("One of the most popular set visualization R packages is the venneuler package."),
-                h3("For this reason we have allowed the same input style for UpSetR."),
-                h3("Here is an example of the input. Copy and paste it above to see how it works."),
+                tags$h3(HTML("<u>Instructions</u>")), 
+                p("The expression input style allows the user to name each intersection and assign 
+                  a size to it. When including an intersection of degree 2 or more, the names of the sets
+                  that make up the intersections are seperated by an ampersand (' & '). The names of the sets
+                  can be any string. The only limitations of the set names is that they cant contain any spaces. 
+                  As an alternative an underscore (' _ ') character can be used to to substitute for the spaces."),
+                br(), br(),
+                p("Here is an example of an expression input. Copy and paste it into the input box to see how it works."),
                 br(),
-                h4("A=12, B=12, C=5, A&B=4, A&C=2, B&C=1, A&B&C=2"),
-                br(),br(),
-                h5("** Restriction: No spaces allowed in the names. _ is acceptable.")
+                p("A=12, B=12, C=5, A&B=4, A&C=2, B&C=1, A&B&C=2")
+#                 h3("One of the most popular set visualization R packages is the venneuler package."),
+#                 h3("For this reason we have allowed the same input style for UpSetR."),
+#                 h3("Here is an example of the input. Copy and paste it above to see how it works."),
+#                 br(),
+#                 h4("A=12, B=12, C=5, A&B=4, A&C=2, B&C=1, A&B&C=2"),
+#                 br(),br(),
+#                 h5("** Restriction: No spaces allowed in the names. _ is acceptable.")
                 , width =7)
             )
    )
