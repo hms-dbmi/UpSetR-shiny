@@ -25,7 +25,7 @@ shinyUI(navbarPage("UpSetR",
  tabPanel(
    "1. Enter Data",
    tabsetPanel(
-       tabPanel("file",
+       tabPanel("Option 1: File",
          sidebarLayout(
            sidebarPanel(
          fluidRow(
@@ -52,7 +52,7 @@ shinyUI(navbarPage("UpSetR",
            in the set it is represented as a 1 in that position. If an element is not in
            the set it is represented as a 0."),
          br(),
-         p("After uploading the file, choose the correct seperator. If the elements in each 
+         p("After uploading the file, choose the correct separator. If the elements in each 
            column are seperated by a ' , ' choose comma, by a ' ; ' choose semicolon, or by tabs choose tab."),
 #          h3("Begin by uploading your correctly formatted .csv file, and selecting the correct separator."),
 #          h4("A correctly formatted data set will denote the sets in binary. (e.g. The movie genres in the table below.)"),
@@ -69,7 +69,7 @@ shinyUI(navbarPage("UpSetR",
          br(), br(), width =7
        ))
        ),
-   tabPanel( "list",
+   tabPanel( "Option 2: List",
      sidebarLayout(
        sidebarPanel(
          fluidRow(
@@ -125,7 +125,7 @@ shinyUI(navbarPage("UpSetR",
          ,width=7)
      )
    ),
-   tabPanel("expression",
+   tabPanel("Option 3: Expression",
             sidebarLayout(
               sidebarPanel(
                 fluidRow(
