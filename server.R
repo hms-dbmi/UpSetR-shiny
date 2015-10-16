@@ -78,6 +78,7 @@ shinyServer(function(input, output, session){
   
   venneulerData <- reactive({
     string <- input$venn
+    string <- gsub("\n", "", string)
     if(string != ""){
       string <- as.list(unlist(strsplit(string, ",")))
       names <- lapply(string, function(x){x <- unlist(strsplit(x, "=")); x <- x[1]})
@@ -234,6 +235,7 @@ My_data <- reactive({
 #     else{
 #       sizes <- sizes[match(Specific_sets(), names(sizes))]
 #     }
+    print(sizes)
     names <- names(sizes); sizes <- as.numeric(sizes);
     maxchar <- max(nchar(names))
     total <- list()
