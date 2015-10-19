@@ -317,9 +317,12 @@ My_data <- reactive({
                            multiple=TRUE, selectize=TRUE, selected = NULL)
     }
     else{
+      data <- My_data()[startEnd()[1]:startEnd()[2]]
+      topfive <- colSums(data)
+      topfive <- as.character(head(names(topfive[order(topfive, decreasing = T)]), 5))
    sets <- selectInput('Select', h6("Select specific sets : "),
                 choices = as.character(colnames(My_data()[ , startEnd()[1]:startEnd()[2]])),
-                multiple=TRUE, selectize=TRUE, selected = NULL)
+                multiple=TRUE, selectize=TRUE, selected = topfive)
     }
    return(sets)
   })
