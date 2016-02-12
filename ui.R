@@ -192,7 +192,7 @@ shinyUI(navbarPage(title = "",
                                  selected = "dec")
                    ),
                    fluidRow(
-                     checkboxInput('empty', label = "Empty Intersections", value = FALSE)
+                     checkboxInput('empty', label = "Show empty intersections", value = FALSE)
                      ),
                    fluidRow(
                      sliderInput("mbratio", label = h6("Bar : Matrix ratio"), value = 0.30, min = 0.20, max = 0.80,
