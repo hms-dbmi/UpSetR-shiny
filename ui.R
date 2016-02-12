@@ -1,8 +1,8 @@
 library(shiny)
 
-shinyUI(navbarPage("UpSetR",
+shinyUI(navbarPage(title = "",
                    theme = shinythemes::shinytheme("flatly"),
- tabPanel("Welcome!",
+ tabPanel(title = p("UpSetR", style = "font-size: 20px; padding-bottom: -0.5cm"),
           sidebarLayout(
             sidebarPanel(
               h2("Welcome to the UpSetR Shiny App!"),
@@ -23,7 +23,7 @@ shinyUI(navbarPage("UpSetR",
         img(src='Rplot.png', align = "center"), width = 7
         ))),
  tabPanel(
-   "1. Enter Data",
+   p("1. Enter Data"),
    tabsetPanel(
        tabPanel("Option 1: File",
          sidebarLayout(
@@ -159,7 +159,7 @@ shinyUI(navbarPage("UpSetR",
             )
    )
    )),
- tabPanel("2. View Data Summary",
+ tabPanel(p("2. View Data Summary", style = "padding-bottom: -0.5cm"),
            mainPanel(
 #             verbatimTextOutput('datatable'),
 #             tableOutput('data'),
@@ -172,7 +172,7 @@ shinyUI(navbarPage("UpSetR",
                     # verbatimTextOutput('intersections'),
                 textOutput('venneuler'), width = 10
           )),
-      tabPanel("3. UpSet Plot",
+      tabPanel(p("3. UpSet Plot", style = "padding-bottom: -0.5cm"),
                sidebarLayout(
                  sidebarPanel(
                    fluidRow(
