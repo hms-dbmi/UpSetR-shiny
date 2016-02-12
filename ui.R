@@ -179,7 +179,7 @@ shinyUI(navbarPage(title = "",
                      htmlOutput("sets")
                    ),
                    fluidRow(
-                     numericInput("nintersections", label = h6("Number of Intersections"), value = 40, min = 1, max = 60)
+                     numericInput("nintersections", label = h6("Limit number of intersections shown to :"), value = 40, min = 1, max = 60)
                    ),
                    fluidRow(
                      selectInput("order", label = h6("Order by"), choices = list("Degree" = "degree",
