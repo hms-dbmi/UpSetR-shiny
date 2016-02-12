@@ -310,11 +310,15 @@ My_data <- reactive({
 #      }
 #   })
   
+  Specific_sets <- reactive({
+    Specific_sets <- as.character(c(input$Select))
+  })
+  
   output$sets <- renderUI({
     if(is.null(My_data()) == T){
       sets <-  selectInput('Select', h6("Select specific sets : "),
                            choices = NULL,
-                           multiple=TRUE, selectize=TRUE, selected = NULL)
+                           multiple=TRUE, selectize=TRUE, selected = Specific_sets())
     }
     else{
       data <- My_data()[startEnd()[1]:startEnd()[2]]
@@ -327,9 +331,6 @@ My_data <- reactive({
    return(sets)
   })
   
-  Specific_sets <- reactive({
-    Specific_sets <- as.character(c(input$Select))
-  })
   
   mat_prop <- reactive({
     mat_prop <- input$mbratio
