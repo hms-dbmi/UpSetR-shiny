@@ -38,7 +38,7 @@ shinyUI(navbarPage(title = "",
        fluidRow(
          radioButtons('sep', label = h6('Separator'),
                       choices = c(Comma=',', Semicolon =';', Tab='\t'),
-                      selected = ';')),
+                      selected = ',')),
        fluidRow(
          br(),
          actionButton("confirm1", "Confirm")
