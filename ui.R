@@ -192,14 +192,14 @@ shinyUI(navbarPage(title = "",
                                  selected = "dec")
                    ),
                    fluidRow(
+                     sliderInput("mbratio", label = h6("Bar : Matrix ratio"), value = 0.30, min = 0.20, max = 0.80,
+                                 ticks = FALSE, step = 0.01) 
+                   ),
+                   fluidRow(
                      sliderInput("angle", h6("Number angles"),  min = -90, max = 90, value = 0, step = 1, ticks = F)
                    ),
                    fluidRow(
                      checkboxInput('empty', label = "Show empty intersections", value = FALSE)
-                     ),
-                   fluidRow(
-                     sliderInput("mbratio", label = h6("Bar : Matrix ratio"), value = 0.30, min = 0.20, max = 0.80,
-                                 ticks = FALSE, step = 0.01) 
                    ),
                    fluidRow(
                      numericInput("pointsize", label = h6("Point Size"), value = 4, min = 1, max = 15)
