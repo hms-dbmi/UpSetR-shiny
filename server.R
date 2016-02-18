@@ -361,6 +361,11 @@ My_data <- reactive({
     return(decrease)
   })
   
+  number_angle <- reactive({
+    angle <- input$angle
+    return(angle)
+  })
+  
   emptyIntersects <- reactive({
     if(isTRUE(input$empty)){choice <- "on"
     return(choice)
@@ -393,6 +398,7 @@ My_data <- reactive({
                sets = Specific_sets(),
                order.by = orderdat(),
                 decreasing = c(decrease()),
+                number.angles = number_angle(),
                 mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())),
                 empty.intersections = emptyIntersects())
     dev.off()
@@ -422,6 +428,7 @@ My_data <- reactive({
             sets = Specific_sets(),
             order.by = orderdat(),
             decreasing = c(decrease()),
+            number.angles = number_angle(),
             mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())))
       
       dev.off()

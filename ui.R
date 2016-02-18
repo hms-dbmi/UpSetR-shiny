@@ -192,6 +192,12 @@ shinyUI(navbarPage(title = "",
                                  selected = "dec")
                    ),
                    fluidRow(
+                     selectInput("angle", h6("Number angles"),  choices = list("-45" = -45,
+                                                                               "0" = 0,
+                                                                               "45" = 45),
+                                 selected = 0)
+                   ),
+                   fluidRow(
                      checkboxInput('empty', label = "Show empty intersections", value = FALSE)
                      ),
                    fluidRow(
