@@ -23,9 +23,28 @@ shinyUI(navbarPage(
               the web applications BioVenn <a href='http://www.biomedcentral.com/content/pdf/1471-2164-9-488.pdf'> (Hulsen et al., 2008)</a> and jvenn <a href=http://www.biomedcentral.com/content/pdf/1471-2105-15-293.pdf> (Bardou et al., 2014) </a></li></ol>"
             )
             ),
+          h4('To view and explore your data click on the "UpSetR plot" tab.'),
           br(),
-          h4('To view and explore your data click on the "UpSetR plot" tab.')
-          ,
+          tags$p(HTML(
+            "UpSetR generates static <a href=\"http://vcg.github.io/upset/?dataset=0&duration=1000&orderBy=subsetSize&grouping=groupByIntersectionSize&selection=\">UpSet plots</a>.
+            The UpSet technique visualizes set intersections in a matrix layout
+            and introduces aggregates based on groupings and queries. The matrix layout enables the effective
+            representation of associated data, such as the number of elements in the aggregates and intersections,
+            as well as additional summary statistics derived from subset or element attributes."
+          )),
+          tags$p(HTML(
+            "For further details about the original technique see the <a href=\"http://www.caleydo.org/tools/upset/\">UpSet website</a>.
+            You can also check out the <a href=\"https://github.com/hms-dbmi/UpSetR\"> UpSetR R package </a> and its source code."
+          )),
+          tags$p(HTML(
+            "If you use UpSetR in a paper, please cite: "
+          )),
+          tags$p(HTML(
+            "<blockquote>Alexander Lex, Nils Gehlenborg, Hendrik Strobelt, Romain Vuillemot, Hanspeter Pfister,
+            UpSet: Visualization of Intersecting Sets,
+            IEEE Transactions on Visualization and Computer Graphics (InfoVis '14), vol. 20, no. 12, pp. 1983–1992, 2014.
+            doi:10.1109/TVCG.2014.2346248 </blockquote>"
+          )),
           width = 12
           ),
         mainPanel(img(src = 'Rplot.png', align = "center", width="675px", height="457px"))
