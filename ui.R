@@ -17,14 +17,12 @@ shinyUI(navbarPage(
           
           tags$p(
             HTML(
-              "<ol start='1'> <li>\"Upload a file\" takes a correctly formatted.csv file.</li>
-              <li>\"venneuler input\" takes the input used by the venneuler R package <a href ='https://cran.r-project.org/web/packages/venneuler/venneuler.pdf'> (Wilkinson, 2015) </a></li>
-              <li>\"Enter as lists\" takes up to 6 different lists that contain unique elements, similar to that used in
+              "<ol start='1'> <li>\"File\" takes a correctly formatted.csv file.</li>
+              <li>\"List\" takes the input used by the venneuler R package <a href ='https://cran.r-project.org/web/packages/venneuler/venneuler.pdf'> (Wilkinson, 2015) </a></li>
+              <li>\"Expression\" takes up to 6 different lists that contain unique elements, similar to that used in
               the web applications BioVenn <a href='http://www.biomedcentral.com/content/pdf/1471-2164-9-488.pdf'> (Hulsen et al., 2008)</a> and jvenn <a href=http://www.biomedcentral.com/content/pdf/1471-2105-15-293.pdf> (Bardou et al., 2014) </a></li></ol>"
             )
             ),
-          br(),
-          h4('To get an overview of your data click the "Data Summary" tab.'),
           br(),
           h4('To view and explore your data click on the "UpSetR plot" tab.')
           ,
