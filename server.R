@@ -316,7 +316,7 @@ My_data <- reactive({
   
   output$sets <- renderUI({
     if(is.null(My_data()) == T){
-      sets <-  selectInput('Select', h6("Select specific sets : "),
+      sets <-  selectInput('Select', h6("Select at least two sets : "),
                            choices = NULL,
                            multiple=TRUE, selectize=TRUE, selected = Specific_sets())
     }
