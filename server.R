@@ -10,7 +10,7 @@ shinyServer(function(input, output, session){
   
   attr(input, "readonly") <- FALSE
 
-  observeEvent(input$confirm1,{
+  eventReactive(input$confirm1,{
     input$confirm1[1] <- 1
     input$confirm2[1] <- 0
     input$confirm3[1] <- 0
@@ -23,7 +23,7 @@ shinyServer(function(input, output, session){
     input$Select <- NULL
   })  
   
-  observeEvent(input$confirm2,{
+  eventReactive(input$confirm2,{
     input$confirm1[1] <- 0
     input$confirm2[1] <- 1
     input$confirm3[1] <- 0
@@ -36,7 +36,7 @@ shinyServer(function(input, output, session){
     input$Select <- NULL
   })  
   
-  observeEvent(input$confirm3,{
+  eventReactive(input$confirm3,{
     input$confirm1[1] <- 0
     input$confirm2[1] <- 0
     input$confirm3[1] <- 1
