@@ -429,7 +429,8 @@ My_data <- reactive({
             order.by = orderdat(),
             decreasing = c(decrease()),
             number.angles = number_angle(),
-            mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())))
+            mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())),
+            empty.intersections = emptyIntersects())
       
       dev.off()
     }
