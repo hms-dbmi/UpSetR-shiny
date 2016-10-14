@@ -360,6 +360,6 @@ shinyUI(navbarPage(
   ),
   tags$head(tags$style('
                        nav .container:first-child {
-                       margin-left:10px; width: 100%;
+                       margin-left:50px; width: 100%;
                        }'))
   ))
