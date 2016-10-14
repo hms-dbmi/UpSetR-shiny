@@ -357,5 +357,9 @@ shinyUI(navbarPage(
                 imageOutput('plot')
                 , width = 10)
     )
-  )
+  ),
+  tags$head(tags$style('
+                       nav .container:first-child {
+                       margin-left:10px; width: 100%;
+                       }'))
   ))
