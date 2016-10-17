@@ -102,17 +102,6 @@ shinyServer(function(input, output, session){
       venneuler <- upsetVenneuler(values)
       return(venneuler)
     }
-    else{
-      venneuler <- NULL
-      showModal(modalDialog(
-        title = "Plotting Error!",
-        "There was an error plotting your data. Please check your input format. Also, at least two lists (sets) 
-        must be used to generate the UpSetR plots.",
-        footer = modalButton("Close"),
-        easyClose = TRUE
-      ))
-      return(venneuler)
-    }
   })
   
   listData <- reactive({
@@ -148,13 +137,6 @@ shinyServer(function(input, output, session){
     
     data <- data[, which(colSums(data) != 0)]
     if(nrow(data) == 0 || is.null(nrow(data))){
-      showModal(modalDialog(
-        title = "Plotting Error!",
-        "There was an error plotting your data. Please check your input format. Also, at least two lists (sets) 
-        must be used to generate the UpSetR plots.",
-        footer = modalButton("Close"),
-        easyClose = TRUE
-      ))
       data <- NULL
     }
    
@@ -167,10 +149,10 @@ My_data <- reactive({
     My_data <- My_dat()
   }
   else if(confirmed()==2){
-    My_data <- venneulerData()
+    My_data <- listData()
   }
   else if(confirmed()==3){
-    My_data <- listData()
+    My_data <- venneulerData()
   }
   else{
     return(NULL)

@@ -18,9 +18,10 @@ shinyUI(navbarPage(
           tags$p(
             HTML(
               "<ol start='1'> <li>\"File\" takes a correctly formatted.csv file.</li>
-              <li>\"List\" takes the input used by the venneuler R package <a href ='https://cran.r-project.org/web/packages/venneuler/venneuler.pdf'> (Wilkinson, 2015) </a></li>
-              <li>\"Expression\" takes up to 6 different lists that contain unique elements, similar to that used in
-              the web applications BioVenn <a href='http://www.biomedcentral.com/content/pdf/1471-2164-9-488.pdf'> (Hulsen et al., 2008)</a> and jvenn <a href=http://www.biomedcentral.com/content/pdf/1471-2105-15-293.pdf> (Bardou et al., 2014) </a></li></ol>"
+              <li>\"List\" takes up to 6 different lists that contain unique elements, similar to that used in
+              the web applications BioVenn <a href='http://www.biomedcentral.com/content/pdf/1471-2164-9-488.pdf'> (Hulsen et al., 2008)</a> and jvenn <a href=http://www.biomedcentral.com/content/pdf/1471-2105-15-293.pdf> (Bardou et al., 2014) </a></li>
+              <li>\"Expression\" takes the input used by the venneuler R package <a href ='https://cran.r-project.org/web/packages/venneuler/venneuler.pdf'> (Wilkinson, 2015) </a></li>
+              </ol>"
             )
             ),
           h4('To view and explore your data click on the "UpSetR plot" tab.'),
@@ -281,7 +282,10 @@ shinyUI(navbarPage(
                   rows = 10
                 )
               ),
-              fluidRow(br(), actionButton("confirm2", "Confirm")),
+              fluidRow(br(), tags$button(id="confirm3", 
+                                         type="button", 
+                                         class="btn action-button btn-large btn-primary", 
+                                         HTML('<i class="icon-star"></i>Confirm'))),
               width = 12)
             )
           )
@@ -367,35 +371,35 @@ shinyUI(navbarPage(
       tabPanel('Advanced',
                fluidRow(numericInput(
                  "intersection_title_scale",
-                 label = h6("Intersection Size Label Text Scale"),
+                 label = h6("Intersection Size Label Text Scale (max=5)"),
                  value = 1.2,
                  min = 1,
                  max = 5
                )),
                fluidRow(numericInput(
                  "set_title_scale",
-                 label = h6("Set Size Label Text Scale"),
+                 label = h6("Set Size Label Text Scale (max=5)"),
                  value = 1.2,
                  min = 1,
                  max = 15
                )),
                fluidRow(numericInput(
                  "intersection_ticks_scale",
-                 label = h6("Intersection Size Ticks Text Scale"),
+                 label = h6("Intersection Size Ticks Text Scale (max=5)"),
                  value = 1.2,
                  min = 1,
                  max = 5
                )),
                fluidRow(numericInput(
                  "set_ticks_scale",
-                 label = h6("Set Size Ticks Text Scale"),
+                 label = h6("Set Size Ticks Text Scale (max=5)"),
                  value = 1.2,
                  min = 1,
                  max = 5
                )),
                fluidRow(numericInput(
                  "intersection_size_numbers_scale",
-                 label = h6("Intersection Size Numbers Text Scale"),
+                 label = h6("Intersection Size Numbers Text Scale (max=5)"),
                  value = 1.2,
                  min = 1,
                  max = 5
@@ -405,7 +409,7 @@ shinyUI(navbarPage(
                  label = h6("Set Names Text Size"),
                  value = 9,
                  min = 1,
-                 max = 5
+                 max = 25
                )))
       ), width=3),
       mainPanel(textOutput('plot_text'),
