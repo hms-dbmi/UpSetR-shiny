@@ -14,6 +14,7 @@ shinyServer(function(input, output, session){
     input$confirm1[1] <- 1
     input$confirm2[1] <- 0
     input$confirm3[1] <- 0
+    session$pushed <- 1
     if(is.null(My_data())){
       withProgress(message = "Confirmed failure", value = 0, {setProgress(1)})
     }
@@ -27,6 +28,7 @@ shinyServer(function(input, output, session){
     input$confirm1[1] <- 0
     input$confirm2[1] <- 1
     input$confirm3[1] <- 0
+    session$pushed <- 2
     if(is.null(My_data())){
       withProgress(message = "Confirmed failure", value = 0, {setProgress(1)})
     }
@@ -40,6 +42,7 @@ shinyServer(function(input, output, session){
     input$confirm1[1] <- 0
     input$confirm2[1] <- 0
     input$confirm3[1] <- 1
+    session$pushed <- 3
     if(is.null(My_data())){
       withProgress(message = "Confirmed failure", value = 0, {setProgress(1)})
     }
@@ -90,6 +93,13 @@ shinyServer(function(input, output, session){
     }
     else{
       venneuler <- NULL
+      showModal(modalDialog(
+        title = "Plotting Error!",
+        "There was an error plotting your data. Please check your input format. Also, at least two lists (sets) 
+        must be used to generate the UpSetR plots.",
+        footer = modalButton("Close"),
+        easyClose = TRUE
+      ))
       return(venneuler)
     }
   })
@@ -126,10 +136,17 @@ shinyServer(function(input, output, session){
     names(data) <- names
     
     data <- data[, which(colSums(data) != 0)]
-    
-    if(nrow(data) == 0){
+    if(nrow(data) == 0 || is.null(nrow(data))){
+      showModal(modalDialog(
+        title = "Plotting Error!",
+        "There was an error plotting your data. Please check your input format. Also, at least two lists (sets) 
+        must be used to generate the UpSetR plots.",
+        footer = modalButton("Close"),
+        easyClose = TRUE
+      ))
       data <- NULL
     }
+   
     return(data)
   })
   
@@ -388,7 +405,6 @@ My_data <- reactive({
     # A temp file to save the output. It will be deleted after renderImage
     # sends it, because deleteFile=TRUE.
     outfile <- tempfile(fileext='.png')
-    
     # Generate a png
     png(outfile, width=width*pixelratio, height=height*pixelratio,
         res=72*pixelratio)
@@ -400,13 +416,20 @@ My_data <- reactive({
                 decreasing = c(decrease()),
                 number.angles = number_angle(),
                 mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())),
-                empty.intersections = emptyIntersects())
+                empty.intersections = emptyIntersects(),
+                text.scale = c(input$intersection_title_scale, input$intersection_ticks_scale,
+                               input$set_title_scale, input$set_ticks_scale,
+                               input$intersection_size_numbers_scale),
+                name.size = input$names_scale)
     dev.off()
     # Return a list
     list(src = outfile,
          width = width,
          height = height)
   }, deleteFile = TRUE)
+  
+  
+  outputOptions(output, "plot", suspendWhenHidden = FALSE)
   
   output$down <- downloadHandler(
     

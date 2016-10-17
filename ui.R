@@ -114,7 +114,11 @@ shinyUI(navbarPage(
                        selected = ','
                      )),
                      fluidRow(br(),
-                              actionButton("confirm1", "Confirm")),
+                                tags$button(id="confirm1", 
+                                            type="button", 
+                                            class="btn action-button btn-large btn-primary", 
+                                            HTML('<i class="icon-star"></i>Confirm'))
+                              ),
                      width = 12
                    )))),
         tabPanel("Option 2: List",
@@ -229,7 +233,12 @@ shinyUI(navbarPage(
                          rows = 3
                        )
                      )),
-                     fluidRow(br(), actionButton("confirm3", "Confirm")),
+                     fluidRow(br(),
+                              tags$button(id="confirm2", 
+                                          type="button", 
+                                          class="btn action-button btn-large btn-primary", 
+                                          HTML('<i class="icon-star"></i>Confirm'))
+                              ),
                      width= 12)
                    )))),
         tabPanel(
@@ -284,6 +293,8 @@ shinyUI(navbarPage(
     p("UpSet Plot", style = "padding-bottom: -0.5cm"),
     sidebarLayout(
       sidebarPanel(
+        tabsetPanel(
+          tabPanel('Settings',
         fluidRow(htmlOutput("sets")),
         fluidRow(
           numericInput(
@@ -353,9 +364,53 @@ shinyUI(navbarPage(
         ,
         width = 2
       ),
+      tabPanel('Advanced',
+               fluidRow(numericInput(
+                 "intersection_title_scale",
+                 label = h6("Intersection Size Label Text Scale"),
+                 value = 1.2,
+                 min = 1,
+                 max = 5
+               )),
+               fluidRow(numericInput(
+                 "set_title_scale",
+                 label = h6("Set Size Label Text Scale"),
+                 value = 1.2,
+                 min = 1,
+                 max = 15
+               )),
+               fluidRow(numericInput(
+                 "intersection_ticks_scale",
+                 label = h6("Intersection Size Ticks Text Scale"),
+                 value = 1.2,
+                 min = 1,
+                 max = 5
+               )),
+               fluidRow(numericInput(
+                 "set_ticks_scale",
+                 label = h6("Set Size Ticks Text Scale"),
+                 value = 1.2,
+                 min = 1,
+                 max = 5
+               )),
+               fluidRow(numericInput(
+                 "intersection_size_numbers_scale",
+                 label = h6("Intersection Size Numbers Text Scale"),
+                 value = 1.2,
+                 min = 1,
+                 max = 5
+               )),
+               fluidRow(numericInput(
+                 "names_scale",
+                 label = h6("Set Names Text Size"),
+                 value = 9,
+                 min = 1,
+                 max = 5
+               )))
+      ), width=3),
       mainPanel(textOutput('plot_text'),
                 imageOutput('plot')
-                , width = 10)
+                , width = 9)
     )
   ),
   tags$head(tags$style('
