@@ -9,12 +9,15 @@ source("converters.R")
 shinyServer(function(input, output, session){
   
   attr(input, "readonly") <- FALSE
+  
+  pushed <- reactiveValues()
+  pushed$B <- 0
 
   eventReactive(input$confirm1,{
     input$confirm1[1] <- 1
     input$confirm2[1] <- 0
     input$confirm3[1] <- 0
-    session$pushed <- 1
+    pushed$B <- 1
     if(is.null(My_data())){
       withProgress(message = "Confirmed failure", value = 0, {setProgress(1)})
     }
@@ -28,7 +31,7 @@ shinyServer(function(input, output, session){
     input$confirm1[1] <- 0
     input$confirm2[1] <- 1
     input$confirm3[1] <- 0
-    session$pushed <- 2
+    pushed$B <- 2
     if(is.null(My_data())){
       withProgress(message = "Confirmed failure", value = 0, {setProgress(1)})
     }
@@ -42,7 +45,7 @@ shinyServer(function(input, output, session){
     input$confirm1[1] <- 0
     input$confirm2[1] <- 0
     input$confirm3[1] <- 1
-    session$pushed <- 3
+    pushed$B <- 3
     if(is.null(My_data())){
       withProgress(message = "Confirmed failure", value = 0, {setProgress(1)})
     }
@@ -50,7 +53,7 @@ shinyServer(function(input, output, session){
       withProgress(message = "Confirmed success", value = 0, {setProgress(1)})
     }
     input$Select <- NULL
-  })  
+  })
 
   confirmed <- reactive({
     one <- input$confirm1[1]
@@ -58,6 +61,7 @@ shinyServer(function(input, output, session){
     three <- input$confirm3[1]
     all <- c(one,two,three)
     maximum <- which(all == max(all))
+    pushed$B <- maximum
     if(maximum==1){
       return(1)
       }
@@ -67,10 +71,17 @@ shinyServer(function(input, output, session){
     if(maximum==3){
       return(3)
     }
+    else{
+      return(0)
+    }
   })
   
   My_dat <- reactive({  
     inFile <- input$file1
+    
+    if(pushed$B == 0 || length(pushed$B) > 1){
+      return(NULL)
+    }
     
     if (is.null(inFile))
       return(NULL)
@@ -252,7 +263,6 @@ My_data <- reactive({
 #     else{
 #       sizes <- sizes[match(Specific_sets(), names(sizes))]
 #     }
-    print(sizes)
     names <- names(sizes); sizes <- as.numeric(sizes);
     maxchar <- max(nchar(names))
     total <- list()
@@ -422,6 +432,7 @@ My_data <- reactive({
                                input$intersection_size_numbers_scale),
                 name.size = input$names_scale)
     dev.off()
+    
     # Return a list
     list(src = outfile,
          width = width,
@@ -430,6 +441,12 @@ My_data <- reactive({
   
   
   outputOptions(output, "plot", suspendWhenHidden = FALSE)
+  
+  observe({
+    if(pushed$B != 0 && length(pushed$B) == 1){
+      updateTabsetPanel(session, "main_panel", "upset_plot")
+    }
+  })
   
   output$down <- downloadHandler(
     

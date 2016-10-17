@@ -1,7 +1,7 @@
 library(shiny)
 
 shinyUI(navbarPage(
-  title = "",
+  title = "", id="main_panel",
   theme = shinythemes::shinytheme("flatly"),
   tabPanel(
     title = p("UpSetR", style = "font-size: 20px; padding-bottom: -0.5cm"),
@@ -289,7 +289,7 @@ shinyUI(navbarPage(
         )
     ))
   ),
-  tabPanel(
+  tabPanel(value="upset_plot",
     p("UpSet Plot", style = "padding-bottom: -0.5cm"),
     sidebarLayout(
       sidebarPanel(
