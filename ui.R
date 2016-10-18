@@ -11,6 +11,14 @@ shinyUI(navbarPage(
         sidebarPanel(
           h2("Welcome to the UpSetR Shiny App!"),
           br(),
+          tags$p(HTML(
+            "UpSetR generates static <a href=\"http://vcg.github.io/upset/?dataset=0&duration=1000&orderBy=subsetSize&grouping=groupByIntersectionSize&selection=\">UpSet plots</a>.
+            The UpSet technique visualizes set intersections in a matrix layout
+            and introduces aggregates based on groupings and queries. The matrix layout enables the effective
+            representation of associated data, such as the number of elements in the aggregates and intersections,
+            as well as additional summary statistics derived from subset or element attributes."
+          )),
+          br(),
           h4(
             HTML("To begin, input your data using one of the three input styles.")
           ),
@@ -24,15 +32,8 @@ shinyUI(navbarPage(
               </ol>"
             )
             ),
-          h4('To view and explore your data click on the "UpSetR plot" tab.'),
+          h4('To view and explore your data click on the "Plot!" button.'),
           br(),
-          tags$p(HTML(
-            "UpSetR generates static <a href=\"http://vcg.github.io/upset/?dataset=0&duration=1000&orderBy=subsetSize&grouping=groupByIntersectionSize&selection=\">UpSet plots</a>.
-            The UpSet technique visualizes set intersections in a matrix layout
-            and introduces aggregates based on groupings and queries. The matrix layout enables the effective
-            representation of associated data, such as the number of elements in the aggregates and intersections,
-            as well as additional summary statistics derived from subset or element attributes."
-          )),
           tags$p(HTML(
             "For further details about the original technique see the <a href=\"http://www.caleydo.org/tools/upset/\">UpSet website</a>.
             You can also check out the <a href=\"https://github.com/hms-dbmi/UpSetR\"> UpSetR R package </a> and its source code."
@@ -118,7 +119,7 @@ shinyUI(navbarPage(
                                 tags$button(id="confirm1", 
                                             type="button", 
                                             class="btn action-button btn-large btn-primary", 
-                                            HTML('<i class="icon-star"></i>Confirm'))
+                                            HTML('<i class="icon-star"></i>Plot!'))
                               ),
                      width = 12
                    )))),
@@ -238,7 +239,7 @@ shinyUI(navbarPage(
                               tags$button(id="confirm2", 
                                           type="button", 
                                           class="btn action-button btn-large btn-primary", 
-                                          HTML('<i class="icon-star"></i>Confirm'))
+                                          HTML('<i class="icon-star"></i>Plot!'))
                               ),
                      width= 12)
                    )))),
@@ -285,7 +286,7 @@ shinyUI(navbarPage(
               fluidRow(br(), tags$button(id="confirm3", 
                                          type="button", 
                                          class="btn action-button btn-large btn-primary", 
-                                         HTML('<i class="icon-star"></i>Confirm'))),
+                                         HTML('<i class="icon-star"></i>Plot!'))),
               width = 12)
             )
           )
