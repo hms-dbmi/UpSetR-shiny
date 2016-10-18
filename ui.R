@@ -53,7 +53,6 @@ shinyUI(navbarPage(
       )
     ), column(
       6,
-      
       tabsetPanel(
         tabPanel("Option 1: File",
                  column(12,
@@ -92,10 +91,11 @@ shinyUI(navbarPage(
                        width = 12
                        )
                        ),
+                   fluidRow(
                    sidebarPanel(
                      fluidRow(fileInput(
                        'file1',
-                       label = h5("Upload .csv file"),
+                       label = h5("Upload file"),
                        accept = c(
                          'text/csv',
                          'text/comma-separated-values',
@@ -104,7 +104,7 @@ shinyUI(navbarPage(
                          '.tsv'
                        )
                      )),
-                     fluidRow(checkboxInput('header', label = h6('Header'), TRUE)),
+                     fluidRow(checkboxInput('header', label = 'Header', TRUE)),
                      fluidRow(radioButtons(
                        'sep',
                        label = h6('Separator'),
@@ -122,7 +122,7 @@ shinyUI(navbarPage(
                                             HTML('<i class="icon-star"></i>Plot!'))
                               ),
                      width = 12
-                   )))),
+                   ))))),
         tabPanel("Option 2: List",
                  column(12,
                  sidebarLayout(
@@ -164,7 +164,7 @@ shinyUI(navbarPage(
                      )
                    ),
                    fluidRow(
-                   sidebarPanel(
+                   sidebarPanel(tags$style(type = "text/css", "textarea {width:100%}"),
                      fluidRow(
                        column(6,
                        tags$textarea(
