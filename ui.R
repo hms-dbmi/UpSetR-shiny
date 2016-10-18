@@ -372,45 +372,45 @@ shinyUI(navbarPage(
       tabPanel('Advanced',
                fluidRow(numericInput(
                  "intersection_title_scale",
-                 label = h6("Intersection Size Label Text Scale (max=5)"),
+                 label = h6("Intersection Size Label Text Scale"),
                  value = 1.2,
                  min = 1,
-                 max = 5
+                 max = 1000
                )),
                fluidRow(numericInput(
                  "set_title_scale",
-                 label = h6("Set Size Label Text Scale (max=5)"),
+                 label = h6("Set Size Label Text Scale"),
                  value = 1.2,
                  min = 1,
-                 max = 15
+                 max = 1000
                )),
                fluidRow(numericInput(
                  "intersection_ticks_scale",
-                 label = h6("Intersection Size Ticks Text Scale (max=5)"),
+                 label = h6("Intersection Size Ticks Text Scale"),
                  value = 1.2,
                  min = 1,
-                 max = 5
+                 max = 1000
                )),
                fluidRow(numericInput(
                  "set_ticks_scale",
-                 label = h6("Set Size Ticks Text Scale (max=5)"),
+                 label = h6("Set Size Ticks Text Scale"),
                  value = 1.2,
                  min = 1,
-                 max = 5
+                 max = 1000
                )),
                fluidRow(numericInput(
                  "intersection_size_numbers_scale",
-                 label = h6("Intersection Size Numbers Text Scale (max=5)"),
+                 label = h6("Intersection Size Numbers Text Scale"),
                  value = 1.2,
                  min = 1,
-                 max = 5
+                 max = 1000
                )),
                fluidRow(numericInput(
                  "names_scale",
                  label = h6("Set Names Text Size"),
-                 value = 9,
+                 value = 1.2,
                  min = 1,
-                 max = 25
+                 max = 1000
                )))
       ), width=3),
       mainPanel(textOutput('plot_text'),

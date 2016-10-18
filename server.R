@@ -410,9 +410,8 @@ My_data <- reactive({
                 mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())),
                 empty.intersections = emptyIntersects(),
                 text.scale = c(input$intersection_title_scale, input$intersection_ticks_scale,
-                               input$set_title_scale, input$set_ticks_scale,
-                               input$intersection_size_numbers_scale),
-                name.size = input$names_scale)
+                               input$set_title_scale, input$set_ticks_scale, input$names_scale,
+                               input$intersection_size_numbers_scale))
     dev.off()
     
     # Return a list
@@ -452,7 +451,10 @@ My_data <- reactive({
             decreasing = c(decrease()),
             number.angles = number_angle(),
             mb.ratio = c(as.double(bar_prop()), as.double(mat_prop())),
-            empty.intersections = emptyIntersects())
+            empty.intersections = emptyIntersects(),
+            text.scale = c(input$intersection_title_scale, input$intersection_ticks_scale,
+                           input$set_title_scale, input$set_ticks_scale, input$names_scale,
+                           input$intersection_size_numbers_scale))
       
       dev.off()
     }
