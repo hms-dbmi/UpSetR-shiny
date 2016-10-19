@@ -42,7 +42,7 @@ shinyUI(navbarPage(
             "If you use UpSetR in a paper, please cite: "
           )),
           tags$p(HTML(
-            "<blockquote>Alexander Lex, Nils Gehlenborg, Hendrik Strobelt, Romain Vuillemot, Hanspeter Pfister,
+            "<blockquote style='font-size:14px'>Alexander Lex, Nils Gehlenborg, Hendrik Strobelt, Romain Vuillemot, Hanspeter Pfister,
             UpSet: Visualization of Intersecting Sets,
             IEEE Transactions on Visualization and Computer Graphics (InfoVis '14), vol. 20, no. 12, pp. 1983–1992, 2014.
             doi:10.1109/TVCG.2014.2346248 </blockquote>"
