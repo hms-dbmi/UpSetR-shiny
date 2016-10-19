@@ -3,7 +3,7 @@ library(shiny)
 shinyUI(navbarPage(
   title = "", id="main_panel",
   theme = shinythemes::shinytheme("flatly"),
-  tabPanel(
+  tabPanel(value="main",
     title = p("UpSetR", style = "font-size: 20px; padding-bottom: -0.5cm"),
     fluidRow(column(
       6,
@@ -413,7 +413,7 @@ shinyUI(navbarPage(
                  max = 1000
                )))
       ), width=3),
-      mainPanel(textOutput('plot_text'),
+      mainPanel(htmlOutput('plot_text'),
                 imageOutput('plot')
                 , width = 9)
     )

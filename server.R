@@ -12,6 +12,18 @@ shinyServer(function(input, output, session){
   
   pushed <- reactiveValues()
   pushed$B <- 0
+  
+  output$plot_text <- renderUI({
+    
+    if(is.null(My_data()) == T){
+      p(HTML("This is where your plot will show! <br/> There is no data entered.
+                       Return to the <span> previous tab </span>"),
+        HTML(" to input your data."))
+    }
+    else{
+      HTML(" ")
+    }
+    })
 
   eventReactive(input$confirm1,{
     input$confirm1[1] <- 1
@@ -54,7 +66,7 @@ shinyServer(function(input, output, session){
     }
     input$Select <- NULL
   })
-
+  
   confirmed <- reactive({
     one <- input$confirm1[1]
     two <- input$confirm2[1]
@@ -192,17 +204,6 @@ My_data <- reactive({
 #     }
 #     return(text)
 #   })
-   
-  output$plot_text <- renderText({
-    
-    if(is.null(My_data()) == T){
-      plotText <- "This is where your plot will show!"
-    }
-    else{
-      plotText <- " "
-    }
-    return(plotText)
-  })
   
   FindStartEnd <- function(data){
     startend <- c()
