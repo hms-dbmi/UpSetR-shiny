@@ -444,6 +444,8 @@ My_data <- reactive({
       if(input$filetype == "png")
         png(file, width=width*pixelratio, height=height*pixelratio,
             res=72*pixelratio)
+      else if(input$filetype == "svg")
+          svg(file)
       else
         pdf(file,width = 22, height = 14)
       upset(data = My_data(), 

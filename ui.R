@@ -362,7 +362,7 @@ shinyUI(navbarPage(
           radioButtons(
             inputId = "filetype",
             label = "File type",
-            choices = list("png", "pdf")
+            choices = list("png", "svg", "pdf")
           )
         ),
         fluidRow(downloadButton(outputId = "down", label = "Download!"))
