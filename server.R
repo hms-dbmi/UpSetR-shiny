@@ -6,6 +6,7 @@ library(gridExtra)
 library(plyr)
 library(UpSetR)
 library(shinythemes)
+library(RSVGTipsDevice)
 source("converters.R")
 
 shinyServer(function(input, output, session){
@@ -445,7 +446,7 @@ My_data <- reactive({
         png(file, width=width*pixelratio, height=height*pixelratio,
             res=72*pixelratio)
       else if(input$filetype == "svg")
-          svg(file)
+          devSVGTips(file)
       else
         pdf(file,width = 22, height = 14)
       upset(data = My_data(), 
