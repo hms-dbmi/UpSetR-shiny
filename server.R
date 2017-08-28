@@ -345,6 +345,15 @@ My_data <- reactive({
   })
   
   
+  setOrder <- reactive({
+    if(isTRUE(input$setorder)){
+      return(TRUE)
+    }
+    else{
+      return(FALSE)
+    }
+  })
+
   mat_prop <- reactive({
     mat_prop <- input$mbratio
   })
@@ -408,6 +417,7 @@ My_data <- reactive({
                nintersects = input$nintersections,
                point.size = input$pointsize,
                sets = Specific_sets(),
+               keep.order = setOrder(),
                order.by = orderdat(),
                 decreasing = c(decrease()),
                 number.angles = number_angle(),
@@ -453,6 +463,7 @@ My_data <- reactive({
             nintersects = input$nintersections,
             point.size = input$pointsize,
             sets = Specific_sets(),
+            keep.order = setOrder(),
             order.by = orderdat(),
             decreasing = c(decrease()),
             number.angles = number_angle(),

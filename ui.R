@@ -302,6 +302,9 @@ shinyUI(navbarPage(
           tabPanel('Settings',
         fluidRow(htmlOutput("sets")),
         fluidRow(
+          checkboxInput('setorder', label = "Order sets as above", value = FALSE)
+        ),
+        fluidRow(
           numericInput(
             "nintersections",
             label = h6("Limit number of intersections shown to :"),
