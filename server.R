@@ -11,10 +11,10 @@ source("converters.R")
 
 shinyServer(function(input, output, session){
   
-  attr(input, "readonly") <- FALSE
-  
-  pushed <- reactiveValues()
-  pushed$B <- 0
+  ## UpSetR-shiny fix: modern Shiny `input` is read-only and cannot be assigned
+  ## to; the old attribute-based unlock hack no longer works in current Shiny.
+  ## Track which input method was confirmed with a reactiveVal instead.
+  active_input <- reactiveVal(0L)   # 0 = none; 1 = File; 2 = List; 3 = Expression
   
   output$plot_text <- renderUI({
     
@@ -28,73 +28,27 @@ shinyServer(function(input, output, session){
     }
     })
 
-  eventReactive(input$confirm1,{
-    input$confirm1[1] <- 1
-    input$confirm2[1] <- 0
-    input$confirm3[1] <- 0
-    pushed$B <- 1
-    if(is.null(My_data())){
-      withProgress(message = "Confirmed failure", value = 0, {setProgress(1)})
+  ## "Plot!" buttons: record the confirmed input panel, clear the set selection
+  ## and show a progress note. (The original assigned back into `input`.)
+  note_confirm <- function(sel) {
+    active_input(sel)
+    try(updateSelectInput(session, "Select", selected = character(0)), silent = TRUE)
+    if (is.null(My_data())) {
+      withProgress(message = "Confirmed failure", value = 0, { setProgress(1) })
+    } else {
+      withProgress(message = "Confirmed success", value = 0, { setProgress(1) })
     }
-    else{
-    withProgress(message = "Confirmed success", value = 0, {setProgress(1)})
-    }
-    input$Select <- NULL
-  })  
-  
-  eventReactive(input$confirm2,{
-    input$confirm1[1] <- 0
-    input$confirm2[1] <- 1
-    input$confirm3[1] <- 0
-    pushed$B <- 2
-    if(is.null(My_data())){
-      withProgress(message = "Confirmed failure", value = 0, {setProgress(1)})
-    }
-    else{
-      withProgress(message = "Confirmed success", value = 0, {setProgress(1)})
-    }
-    input$Select <- NULL
-  })  
-  
-  eventReactive(input$confirm3,{
-    input$confirm1[1] <- 0
-    input$confirm2[1] <- 0
-    input$confirm3[1] <- 1
-    pushed$B <- 3
-    if(is.null(My_data())){
-      withProgress(message = "Confirmed failure", value = 0, {setProgress(1)})
-    }
-    else{
-      withProgress(message = "Confirmed success", value = 0, {setProgress(1)})
-    }
-    input$Select <- NULL
-  })
-  
-  confirmed <- reactive({
-    one <- input$confirm1[1]
-    two <- input$confirm2[1]
-    three <- input$confirm3[1]
-    all <- c(one,two,three)
-    maximum <- which(all == max(all))
-    pushed$B <- maximum
-    if(maximum==1){
-      return(1)
-      }
-    if(maximum==2){
-      return(2)
-    }
-    if(maximum==3){
-      return(3)
-    }
-    else{
-      return(0)
-    }
-  })
-  
+  }
+  observeEvent(input$confirm1, note_confirm(1L))
+  observeEvent(input$confirm2, note_confirm(2L))
+  observeEvent(input$confirm3, note_confirm(3L))
+
+  confirmed <- reactive(active_input())
+
   My_dat <- reactive({  
     inFile <- input$file1
     
-    if(pushed$B == 0 || length(pushed$B) > 1){
+    if(confirmed() == 0){
       return(NULL)
     }
     
@@ -400,10 +354,8 @@ My_data <- reactive({
   # A plot of fixed size
   output$plot <- renderImage({
     
-    if(length(My_data()) == 0){stop()}
-    if(length(Specific_sets()) == 1){
-      stop()
-    }
+    req(length(My_data()) > 0)
+    req(length(Specific_sets()) != 1)
     width  <- session$clientData$output_plot_width
     height <- ((session$clientData$output_plot_height)*1.7)
     pixelratio <- session$clientData$pixelratio
@@ -438,7 +390,7 @@ My_data <- reactive({
   outputOptions(output, "plot", suspendWhenHidden = FALSE)
   
   observe({
-    if(pushed$B != 0 && length(pushed$B) == 1){
+    if(confirmed() != 0){
       updateTabsetPanel(session, "main_panel", "upset_plot")
     }
   })
